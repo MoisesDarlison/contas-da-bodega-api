@@ -1,12 +1,71 @@
+import { randomUUID } from 'node:crypto';
+
 export class Person {
-  constructor(
-    public readonly id: string,
-    public name: string,
-    public email: string,
-    public companies: string[],
-    public isActive: boolean,
-    public readonly createdAt: Date,
-    public updatedAt: Date,
-    public phone?: string,
+  private constructor(
+    private id: string,
+    private name: string,
+    private email: string,
+    private companies: string[],
+    private isActive: boolean,
+    private createdAt: Date,
+    private updatedAt: Date,
+    private phone?: string,
+    private deletedAt?: Date | null,
   ) {}
+
+  static create(input: {
+    name: string;
+    email: string;
+    company: string;
+    phone?: string;
+  }): Person {
+    const now = new Date();
+    const id = randomUUID();
+
+    if (!input.name || !input.email) {
+      throw new Error('Name and Email are required');
+    }
+
+    return new Person(
+      id,
+      input.name,
+      input.email,
+      [input.company],
+      true,
+      now,
+      now,
+      input.phone,
+      null,
+    );
+  }
+
+  deactivate() {
+    this.isActive = false;
+    this.touch();
+  }
+
+  activate() {
+    this.isActive = true;
+    this.touch();
+  }
+
+  updatePhone(newPhone: string) {
+    this.phone = newPhone;
+    this.touch();
+  }
+
+  includeCompany(newCompany: string) {
+    this.companies.push(newCompany);
+    this.touch();
+  }
+
+  removeCompany(oldCompany: string) {
+    const newCompany = this.companies.filter((i) => i != oldCompany);
+    this.companies = newCompany;
+    this.touch();
+  }
+
+  private touch() {
+    this.updatedAt = new Date();
+  }
 }

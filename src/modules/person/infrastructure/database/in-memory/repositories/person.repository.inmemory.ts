@@ -11,9 +11,4 @@ export class InMemoryPersonRepository implements PersonRepository {
     this.persons.push(person);
     return person;
   }
-
-  async findById(id: string): Promise<Person | null> {
-    const found = this.persons.find((p) => p.id === id);
-    return found || null;
-  }
 }

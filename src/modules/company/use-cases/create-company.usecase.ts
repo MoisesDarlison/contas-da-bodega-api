@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'node:crypto';
 
-import { CompanyRepository } from '../domain/repositories/company.repository';
 import { Company } from '../domain/entities/company.entity';
+import { CompanyRepository } from '../domain/repositories/company.repository';
 
 @Injectable()
 export class CreateCompanyUseCase {
@@ -14,19 +13,7 @@ export class CreateCompanyUseCase {
     filialId: string;
     phone?: string;
   }): Promise<Company> {
-    const now = new Date();
-    const company = new Company(
-      randomUUID(),
-      input.name,
-      input.email,
-      input.filialId,
-      true,
-      now,
-      now,
-      null,
-      input.phone,
-    );
-
+    const company = Company.create(input);
     return this.repo.create(company);
   }
 }
