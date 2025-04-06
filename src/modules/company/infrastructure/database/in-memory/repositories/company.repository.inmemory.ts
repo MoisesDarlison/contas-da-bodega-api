@@ -1,14 +1,30 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { Injectable } from '@nestjs/common';
-import { Company } from 'src/modules/company/domain/entities/company.entity';
-import { CompanyRepository } from 'src/modules/company/domain/repositories/company.repository';
 
-@Injectable()
+import { Company } from '../../../../domain/entities/company.entity';
+import { CompanyRepository } from '../../../../domain/repositories/company.repository';
+
 export class InMemoryCompanyRepository implements CompanyRepository {
-  private persons: Company[] = [];
+  private companies: Company[] = [];
 
-  async create(person: Company): Promise<Company> {
-    this.persons.push(person);
-    return person;
+  async create(company: Company): Promise<Company> {
+    this.companies.push(company);
+    return company;
+  }
+
+  async findById(id: string): Promise<Company | null> {
+    return this.companies.find((c) => c.getId() === id) ?? null;
+  }
+
+  async update(company: Company): Promise<void> {
+    const index = this.companies.findIndex(
+      (c) => c.getId() === company.getId(),
+    );
+    if (index >= 0) {
+      this.companies[index] = company;
+    }
+  }
+
+  async findAll(): Promise<Company[]> {
+    return this.companies;
   }
 }

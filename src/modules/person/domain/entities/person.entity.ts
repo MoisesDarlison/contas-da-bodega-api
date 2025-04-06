@@ -6,7 +6,7 @@ export class Person {
     private id: string,
     private name: string,
     private email: string,
-    private companies: string[],
+    private companyIds: string[],
     private type: PersonType,
     private isActive: boolean,
     private createdAt: Date,
@@ -42,6 +42,10 @@ export class Person {
     );
   }
 
+  getId() {
+    return this.id;
+  }
+
   deactivate() {
     this.isActive = false;
     this.touch();
@@ -62,14 +66,15 @@ export class Person {
     this.touch();
   }
 
-  includeCompany(newCompany: string) {
-    this.companies.push(newCompany);
-    this.touch();
+  addCompany(companyId: string) {
+    if (!this.companyIds.includes(companyId)) {
+      this.companyIds.push(companyId);
+      this.touch();
+    }
   }
 
-  removeCompany(oldCompany: string) {
-    const newCompany = this.companies.filter((i) => i != oldCompany);
-    this.companies = newCompany;
+  removeCompany(companyId: string) {
+    this.companyIds = this.companyIds.filter((id) => id !== companyId);
     this.touch();
   }
 

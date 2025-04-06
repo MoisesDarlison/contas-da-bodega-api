@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { Company } from '../domain/entities/company.entity';
-import { CompanyRepository } from '../domain/repositories/company.repository';
+import { Company } from '../../domain/entities/company.entity';
+import { CompanyRepository } from '../../domain/repositories/company.repository';
 
 @Injectable()
 export class CreateCompanyUseCase {
