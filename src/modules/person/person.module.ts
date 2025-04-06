@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CreatePersonUseCase } from './application/use-cases/create-person.usecase';
+import { FindAllPersonUseCase } from './application/use-cases/find-all-person.usecase';
 import { PersonRepository } from './domain/repositories/person.repository';
-import { PersonMongoRepository } from './infrastructure/database/mongodb/repositories/person-mongo.repository';
+import { PersonRepositoryImpl } from './infrastructure/database/mongodb/repositories/person-impl.repository';
 import { PersonSchema } from './infrastructure/database/mongodb/schemas/person.schema';
 import { PersonController } from './interfaces/controllers/person.controller';
-import { FindAllPersonUseCase } from './application/use-cases/find-all-person.usecase';
 
 @Module({
   imports: [
@@ -17,9 +17,9 @@ import { FindAllPersonUseCase } from './application/use-cases/find-all-person.us
     FindAllPersonUseCase,
     {
       provide: PersonRepository,
-      useClass: PersonMongoRepository,
+      useClass: PersonRepositoryImpl,
     },
   ],
-  exports: [PersonRepository],
+  exports: [],
 })
 export class PersonModule {}

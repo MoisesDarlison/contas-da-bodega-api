@@ -1,11 +1,11 @@
-import { randomUUID } from 'node:crypto';
+import { randomBytes, randomUUID } from 'node:crypto';
 
 export class Company {
   private constructor(
     private readonly id: string,
+    private sharingIdentifier: string,
     private name: string,
-    private emailManager: string,
-    private personIds: string[],
+    private email: string,
     private isActive: boolean,
     private readonly createdAt: Date,
     private updatedAt: Date,
@@ -17,19 +17,21 @@ export class Company {
     name: string;
     email: string;
     phone?: string;
+    sharingIdentifier?: string;
   }): Company {
+    if (!input.name || !input.email) {
+      throw new Error('Name and Email are required');
+    }
+
     const now = new Date();
     const id = randomUUID();
-
-    if (!input.name || !input.email) {
-      throw new Error('Name and Email Manager are required');
-    }
+    const sharingIdentifier = randomBytes(8).toString('base64url');
 
     return new Company(
       id,
+      sharingIdentifier,
       input.name,
       input.email,
-      [],
       true,
       now,
       now,
@@ -38,8 +40,16 @@ export class Company {
     );
   }
 
-  getId() {
+  getId(): string {
     return this.id;
+  }
+
+  getSharingIdentifier(): string {
+    return this.sharingIdentifier;
+  }
+
+  isCompanyActive(): boolean {
+    return this.isActive;
   }
 
   deactivate() {
@@ -56,15 +66,14 @@ export class Company {
     this.phone = newPhone;
     this.touch();
   }
-  addPerson(personId: string) {
-    if (!this.personIds.includes(personId)) {
-      this.personIds.push(personId);
-      this.touch();
-    }
+
+  updateName(newName: string) {
+    this.name = newName;
+    this.touch();
   }
 
-  removePerson(personId: string) {
-    this.personIds = this.personIds.filter((id) => id !== personId);
+  updateEmail(newEmail: string) {
+    this.email = newEmail;
     this.touch();
   }
 

@@ -5,7 +5,7 @@ import { PersonRepository } from 'src/modules/person/domain/repositories/person.
 import { Person } from 'src/modules/person/domain/entities/person.entity';
 
 @Injectable()
-export class PersonMongoRepository implements PersonRepository {
+export class PersonRepositoryImpl implements PersonRepository {
   constructor(
     @InjectModel('Person') private readonly personModel: Model<Person>,
   ) {}
@@ -20,7 +20,6 @@ export class PersonMongoRepository implements PersonRepository {
       isActive: person['isActive'],
       createdAt: person['createdAt'],
       updatedAt: person['updatedAt'],
-      deletedAt: person['deletedAt'],
     });
   }
 
