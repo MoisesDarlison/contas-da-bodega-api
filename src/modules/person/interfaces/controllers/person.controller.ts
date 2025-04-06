@@ -1,13 +1,14 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreatePersonUseCase } from '../../application/use-cases/create-person.usecase';
-import { FindAllPersonUseCase } from '../../application/use-cases/find-all-person.usecase';
 import { CreatePersonDto } from './dtos/create-person.dto';
+import { Person } from '../../domain/entities/person.entity';
+import { FindAllPersonUseCase } from '../../application/use-cases/find-all-person.usecase';
 
 @Controller('person')
 export class PersonController {
   constructor(
     private readonly createUseCase: CreatePersonUseCase,
-    private readonly findAllUseCase: FindAllPersonUseCase,
+    private readonly findAllPersonUseCase: FindAllPersonUseCase,
   ) {}
 
   @Post('create')
@@ -17,7 +18,7 @@ export class PersonController {
   }
 
   @Get()
-  async findAll() {
-    return await this.findAllUseCase.execute();
+  async findAll(): Promise<Person[]> {
+    return await this.findAllPersonUseCase.execute();
   }
 }

@@ -1,13 +1,12 @@
 import { randomUUID } from 'node:crypto';
-import { PersonType } from 'src/shared/enums/person-type.enum';
+import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
 
 export class Person {
   private constructor(
     private id: string,
     private name: string,
     private email: string,
-    private companyIds: string[],
-    private type: PersonType,
+    private type: PermissionTypesEnum,
     private isActive: boolean,
     private createdAt: Date,
     private updatedAt: Date,
@@ -32,8 +31,7 @@ export class Person {
       id,
       input.name,
       input.email,
-      [input.company],
-      PersonType.EMPLOYEE,
+      PermissionTypesEnum.EMPLOYEE,
       true,
       now,
       now,
@@ -42,7 +40,7 @@ export class Person {
     );
   }
 
-  getId() {
+  getId(): string {
     return this.id;
   }
 
@@ -61,20 +59,8 @@ export class Person {
     this.touch();
   }
 
-  updateType(newType: PersonType) {
+  updateType(newType: PermissionTypesEnum) {
     this.type = newType;
-    this.touch();
-  }
-
-  addCompany(companyId: string) {
-    if (!this.companyIds.includes(companyId)) {
-      this.companyIds.push(companyId);
-      this.touch();
-    }
-  }
-
-  removeCompany(companyId: string) {
-    this.companyIds = this.companyIds.filter((id) => id !== companyId);
     this.touch();
   }
 
