@@ -19,7 +19,7 @@ export class CreatePersonUseCase {
       randomUUID(),
       input.name,
       input.email,
-      input.company,
+      [input.company],
       true,
       now,
       now,
