@@ -10,10 +10,6 @@ export class CreateCompanyDto {
   email: string;
 
   @IsString()
-  @IsNotEmpty()
-  filialId: string;
-
-  @IsString()
   @IsOptional()
   phone?: string;
 }

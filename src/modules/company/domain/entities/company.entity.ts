@@ -5,7 +5,6 @@ export class Company {
     private readonly id: string,
     private name: string,
     private emailManager: string,
-    private filialId: string,
     private isActive: boolean,
     private readonly createdAt: Date,
     private updatedAt: Date,
@@ -16,21 +15,19 @@ export class Company {
   static create(input: {
     name: string;
     email: string;
-    filialId: string;
     phone?: string;
   }): Company {
     const now = new Date();
     const id = randomUUID();
 
-    if (!input.name || !input.email || !input.filialId) {
-      throw new Error('Name, Email Manager and Filial ID are required');
+    if (!input.name || !input.email) {
+      throw new Error('Name and Email Manager are required');
     }
 
     return new Company(
       id,
       input.name,
       input.email,
-      input.filialId,
       true,
       now,
       now,

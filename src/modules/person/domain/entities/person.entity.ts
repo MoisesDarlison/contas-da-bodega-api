@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { PersonType } from 'src/shared/enums/person-type.enum';
 
 export class Person {
   private constructor(
@@ -6,6 +7,7 @@ export class Person {
     private name: string,
     private email: string,
     private companies: string[],
+    private type: PersonType,
     private isActive: boolean,
     private createdAt: Date,
     private updatedAt: Date,
@@ -31,6 +33,7 @@ export class Person {
       input.name,
       input.email,
       [input.company],
+      PersonType.EMPLOYEE,
       true,
       now,
       now,
@@ -51,6 +54,11 @@ export class Person {
 
   updatePhone(newPhone: string) {
     this.phone = newPhone;
+    this.touch();
+  }
+
+  updateType(newType: PersonType) {
+    this.type = newType;
     this.touch();
   }
 

@@ -10,7 +10,6 @@ export class CreateCompanyUseCase {
   async execute(input: {
     name: string;
     email: string;
-    filialId: string;
     phone?: string;
   }): Promise<Company> {
     const company = Company.create(input);
