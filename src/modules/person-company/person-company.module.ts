@@ -9,7 +9,7 @@ import { GetPersonsByCompanyIdUseCase } from './application/use-cases/get-person
 import { LinkPersonToCompanyUseCase } from './application/use-cases/link-person-to-company.usecase';
 import { PersonCompanyRepositoryImpl } from './infrastructure/database/mongodb/repositories/person-company.repository.impl';
 import { PersonCompanySchema } from './infrastructure/database/mongodb/schemas/person-company.schema';
-import { PersonCompanyController } from './interfaces/controllers/person-company.controller';
+import { PersonCompanyController } from './controllers/person-company.controller';
 
 @Module({
   imports: [

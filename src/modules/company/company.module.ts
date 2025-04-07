@@ -5,7 +5,7 @@ import { FindAllCompanyUseCase } from './application/use-cases/find-all-company.
 import { CompanyRepository } from './domain/repositories/company.repository';
 import { CompanyRepositoryImpl } from './infrastructure/database/mongodb/repositories/company.repository.impl';
 import { CompanySchema } from './infrastructure/database/mongodb/schemas/company.schema';
-import { CompanyController } from './interfaces/controllers/company.controller';
+import { CompanyController } from './controllers/company.controller';
 
 @Module({
   imports: [

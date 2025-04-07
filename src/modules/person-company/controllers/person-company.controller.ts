@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
-import { GetCompaniesByPersonIdUseCase } from '../../application/use-cases/get-companies-by-person-id.usecase';
-import { GetPersonsByCompanyIdUseCase } from '../../application/use-cases/get-persons-by-company-id.usecase';
-import { LinkPersonToCompanyUseCase } from '../../application/use-cases/link-person-to-company.usecase';
+import { GetCompaniesByPersonIdUseCase } from '../application/use-cases/get-companies-by-person-id.usecase';
+import { GetPersonsByCompanyIdUseCase } from '../application/use-cases/get-persons-by-company-id.usecase';
+import { LinkPersonToCompanyUseCase } from '../application/use-cases/link-person-to-company.usecase';
 
 @Controller('person-company')
 export class PersonCompanyController {

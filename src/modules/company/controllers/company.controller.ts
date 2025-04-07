@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreateCompanyUseCase } from '../../application/use-cases/create-company.usecase';
-import { FindAllCompanyUseCase } from '../../application/use-cases/find-all-company.usecase';
+import { CreateCompanyUseCase } from '../application/use-cases/create-company.usecase';
+import { FindAllCompanyUseCase } from '../application/use-cases/find-all-company.usecase';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 
 @Controller('company')

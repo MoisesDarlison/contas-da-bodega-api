@@ -5,7 +5,7 @@ import { FindAllPersonUseCase } from './application/use-cases/find-all-person.us
 import { PersonRepository } from './domain/repositories/person.repository';
 import { PersonRepositoryImpl } from './infrastructure/database/mongodb/repositories/person.repository.impl';
 import { PersonSchema } from './infrastructure/database/mongodb/schemas/person.schema';
-import { PersonController } from './interfaces/controllers/person.controller';
+import { PersonController } from './controllers/person.controller';
 
 @Module({
   imports: [

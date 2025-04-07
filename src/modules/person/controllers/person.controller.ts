@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CreatePersonUseCase } from '../../application/use-cases/create-person.usecase';
+import { CreatePersonUseCase } from '../application/use-cases/create-person.usecase';
 import { CreatePersonDto } from './dtos/create-person.dto';
-import { Person } from '../../domain/entities/person.entity';
-import { FindAllPersonUseCase } from '../../application/use-cases/find-all-person.usecase';
+import { Person } from '../domain/entities/person.entity';
+import { FindAllPersonUseCase } from '../application/use-cases/find-all-person.usecase';
 
 @Controller('person')
 export class PersonController {
