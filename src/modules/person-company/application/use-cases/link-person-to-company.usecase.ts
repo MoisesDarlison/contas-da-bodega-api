@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PersonCompanyRepository } from '../../domain/repositories/person-company.repository';
-import { PersonCompany } from '../../domain/entities/person-company.entity';
 import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
+import { PersonCompany } from '../../domain/entities/person-company.entity';
+import { PersonCompanyRepository } from '../../domain/repositories/person-company.repository';
 
-import { PersonRepository } from 'src/modules/person/domain/repositories/person.repository';
 import { CompanyRepository } from 'src/modules/company/domain/repositories/company.repository';
+import { PersonRepository } from 'src/modules/person/domain/repositories/person.repository';
+import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
+import { ConflictError } from 'src/shared/errors/exceptions';
 
 @Injectable()
 export class LinkPersonToCompanyUseCase {
@@ -21,12 +23,12 @@ export class LinkPersonToCompanyUseCase {
   }): Promise<void> {
     const person = await this.personRepo.findById(input.personId);
     if (!person) {
-      throw new NotFoundException('Person not found');
+      throw new NotFoundException(ERROR_MESSAGES.PERSON_NOT_FOUND);
     }
 
     const company = await this.companyRepo.findById(input.companyId);
     if (!company) {
-      throw new NotFoundException('Company not found');
+      throw new NotFoundException(ERROR_MESSAGES.COMPANY_NOT_FOUND);
     }
 
     const alreadyLinked =
@@ -35,7 +37,7 @@ export class LinkPersonToCompanyUseCase {
         input.companyId,
       );
     if (alreadyLinked) {
-      throw new Error('Person is already linked to this company');
+      throw new ConflictError(ERROR_MESSAGES.LINK_ALREADY_EXISTS);
     }
 
     const link = PersonCompany.create({

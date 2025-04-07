@@ -1,0 +1,38 @@
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpStatus,
+} from '@nestjs/common';
+import { Response } from 'express';
+import {
+  ConflictError,
+  EntityError,
+  NotFoundError,
+} from '../errors/exceptions';
+
+@Catch()
+export class AllExceptionsFilter implements ExceptionFilter {
+  catch(exception: any, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message = 'Internal server error';
+
+    if (exception instanceof NotFoundError) {
+      status = HttpStatus.NOT_FOUND;
+      message = exception.message;
+    } else if (exception instanceof ConflictError) {
+      status = HttpStatus.CONFLICT;
+      message = exception.message;
+    } else if (exception instanceof EntityError) {
+      status = HttpStatus.UNPROCESSABLE_ENTITY;
+      message = exception.message;
+    } else if (exception instanceof Error) {
+      message = exception.message;
+    }
+
+    response.status(status).json({ statusCode: status, message });
+  }
+}

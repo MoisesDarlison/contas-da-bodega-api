@@ -1,4 +1,6 @@
 import { randomUUID } from 'node:crypto';
+import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
+import { EntityError } from 'src/shared/errors/exceptions';
 
 export class Person {
   private constructor(
@@ -22,7 +24,7 @@ export class Person {
     const id = randomUUID();
 
     if (!input.name || !input.email) {
-      throw new Error('Name and Email are required');
+      throw new EntityError(ERROR_MESSAGES.NAME_EMAIL_ARE_REQUIRED);
     }
 
     return new Person(

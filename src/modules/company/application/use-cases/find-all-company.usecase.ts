@@ -8,6 +8,6 @@ export class FindAllCompanyUseCase {
   constructor(private readonly repo: CompanyRepository) {}
 
   async execute(): Promise<Company[]> {
-    return this.repo.findAll();
+    return await this.repo.findAll();
   }
 }

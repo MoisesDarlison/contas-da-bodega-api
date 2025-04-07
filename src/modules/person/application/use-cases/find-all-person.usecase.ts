@@ -8,6 +8,6 @@ export class FindAllPersonUseCase {
   constructor(private readonly repo: PersonRepository) {}
 
   async execute(): Promise<Person[]> {
-    return this.repo.findAll();
+    return await this.repo.findAll();
   }
 }
