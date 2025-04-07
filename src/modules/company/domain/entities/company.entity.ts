@@ -40,6 +40,30 @@ export class Company {
     );
   }
 
+  static clone(props: {
+    id: string;
+    sharingIdentifier: string;
+    name: string;
+    email: string;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    phone?: string;
+    deletedAt?: Date | null;
+  }): Company {
+    return new Company(
+      props.id,
+      props.sharingIdentifier,
+      props.name,
+      props.email,
+      props.isActive,
+      props.createdAt,
+      props.updatedAt,
+      props.deletedAt ?? null,
+      props.phone,
+    );
+  }
+
   getId(): string {
     return this.id;
   }

@@ -1,12 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
 
 export class Person {
   private constructor(
     private id: string,
     private name: string,
     private email: string,
-    private type: PermissionTypesEnum,
     private isActive: boolean,
     private createdAt: Date,
     private updatedAt: Date,
@@ -31,12 +29,33 @@ export class Person {
       id,
       input.name,
       input.email,
-      PermissionTypesEnum.EMPLOYEE,
       true,
       now,
       now,
       input.phone,
       null,
+    );
+  }
+
+  static clone(props: {
+    id: string;
+    name: string;
+    email: string;
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    phone?: string;
+    deletedAt?: Date | null;
+  }): Person {
+    return new Person(
+      props.id,
+      props.name,
+      props.email,
+      props.isActive,
+      props.createdAt,
+      props.updatedAt,
+      props.phone,
+      props.deletedAt ?? null,
     );
   }
 
@@ -56,11 +75,6 @@ export class Person {
 
   updatePhone(newPhone: string) {
     this.phone = newPhone;
-    this.touch();
-  }
-
-  updateType(newType: PermissionTypesEnum) {
-    this.type = newType;
     this.touch();
   }
 
