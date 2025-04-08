@@ -39,18 +39,20 @@ export class Person {
     );
   }
 
-  static clone(props: {
-    id: string;
-    name: string;
-    email: string;
-    isActive: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    phone?: string;
-    deletedAt?: Date | null;
-  }): Person {
+  static clone(
+    id: string,
+    props: {
+      name: string;
+      email: string;
+      isActive: boolean;
+      createdAt: Date;
+      updatedAt: Date;
+      phone?: string;
+      deletedAt?: Date | null;
+    },
+  ): Person {
     return new Person(
-      props.id,
+      id,
       props.name,
       props.email,
       props.isActive,

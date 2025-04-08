@@ -42,19 +42,21 @@ export class Company {
     );
   }
 
-  static clone(props: {
-    id: string;
-    sharingIdentifier: string;
-    name: string;
-    email: string;
-    isActive: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    phone?: string;
-    deletedAt?: Date | null;
-  }): Company {
+  static clone(
+    id: string,
+    props: {
+      sharingIdentifier: string;
+      name: string;
+      email: string;
+      isActive: boolean;
+      createdAt: Date;
+      updatedAt: Date;
+      phone?: string;
+      deletedAt?: Date | null;
+    },
+  ): Company {
     return new Company(
-      props.id,
+      id,
       props.sharingIdentifier,
       props.name,
       props.email,

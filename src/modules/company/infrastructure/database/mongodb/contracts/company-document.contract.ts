@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface CompanyDocument extends Document {
-  id: string;
+  _id: string;
   sharingIdentifier: string;
   name: string;
   email: string;

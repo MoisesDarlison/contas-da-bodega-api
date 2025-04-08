@@ -4,6 +4,12 @@ import { Company } from '../../../../domain/entities/company.entity';
 import { CompanyRepository } from '../../../../domain/repositories/company.repository';
 
 export class InMemoryCompanyRepository implements CompanyRepository {
+  findAll(
+    page: number,
+    limit: number,
+  ): Promise<{ docs: Company[]; total: number }> {
+    throw new Error('Method not implemented.');
+  }
   private companies: Company[] = [];
 
   async create(company: Company): Promise<Company> {
@@ -24,7 +30,7 @@ export class InMemoryCompanyRepository implements CompanyRepository {
     }
   }
 
-  async findAll(): Promise<Company[]> {
+  async findAll2(): Promise<Company[]> {
     return this.companies;
   }
 }

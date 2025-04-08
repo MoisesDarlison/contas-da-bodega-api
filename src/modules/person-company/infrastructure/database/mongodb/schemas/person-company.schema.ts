@@ -12,7 +12,6 @@ export const PersonCompanySchema = new Schema(
     },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
-    deletedAt: { type: Date, default: null },
   },
   {
     collection: 'persons_companies',

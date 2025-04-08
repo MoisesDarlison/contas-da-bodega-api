@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface PersonDocument extends Document {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   isActive: boolean;

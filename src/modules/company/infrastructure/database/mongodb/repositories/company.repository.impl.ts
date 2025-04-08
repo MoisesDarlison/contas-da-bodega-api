@@ -1,14 +1,14 @@
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CompanyRepository } from 'src/modules/company/domain/repositories/company.repository';
 import { Company } from 'src/modules/company/domain/entities/company.entity';
-import { Injectable } from '@nestjs/common';
+import { CompanyRepository } from 'src/modules/company/domain/repositories/company.repository';
 import { CompanyDocument } from '../contracts/company-document.contract';
 
 @Injectable()
 export class CompanyRepositoryImpl implements CompanyRepository {
   private toEntity = (data: CompanyDocument): Company => {
-    return Company.clone(data);
+    return Company.clone(data._id, data);
   };
 
   constructor(
@@ -18,7 +18,7 @@ export class CompanyRepositoryImpl implements CompanyRepository {
 
   async create(company: Company): Promise<Company> {
     const doc: CompanyDocument = await this.companyModel.create({
-      _id: company.getId(),
+      id: company.getId(),
       name: company['name'],
       email: company['email'],
       sharingIdentifier: company.getSharingIdentifier(),
@@ -34,8 +34,18 @@ export class CompanyRepositoryImpl implements CompanyRepository {
     return this.toEntity(doc);
   }
 
-  async findAll(): Promise<Company[]> {
-    const docs: CompanyDocument[] = await this.companyModel.find();
-    return docs.map(this.toEntity);
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<{ docs: Company[]; total: number }> {
+    const skip = (page - 1) * limit;
+    const [docs, total] = await Promise.all([
+      this.companyModel.find().skip(skip).limit(limit).lean(),
+      this.companyModel.countDocuments(),
+    ]);
+    return {
+      docs: docs.map(this.toEntity),
+      total: total,
+    };
   }
 }

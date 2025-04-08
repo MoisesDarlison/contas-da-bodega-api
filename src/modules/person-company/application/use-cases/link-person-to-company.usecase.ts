@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
 import { PersonCompany } from '../../domain/entities/person-company.entity';
 import { PersonCompanyRepository } from '../../domain/repositories/person-company.repository';
 
@@ -7,6 +6,7 @@ import { CompanyRepository } from 'src/modules/company/domain/repositories/compa
 import { PersonRepository } from 'src/modules/person/domain/repositories/person.repository';
 import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
 import { ConflictError } from 'src/shared/errors/exceptions';
+import { ILinkPersonToCompanyUseCaseInput } from '../contracts/link-person-to-company.contract';
 
 @Injectable()
 export class LinkPersonToCompanyUseCase {
@@ -16,11 +16,7 @@ export class LinkPersonToCompanyUseCase {
     private readonly companyRepo: CompanyRepository,
   ) {}
 
-  async execute(input: {
-    personId: string;
-    companyId: string;
-    permissionType: PermissionTypesEnum;
-  }): Promise<void> {
+  async execute(input: ILinkPersonToCompanyUseCaseInput): Promise<void> {
     const person = await this.personRepo.findById(input.personId);
     if (!person) {
       throw new NotFoundException(ERROR_MESSAGES.PERSON_NOT_FOUND);

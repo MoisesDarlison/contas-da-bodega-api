@@ -1,5 +1,6 @@
 import {
   ArgumentsHost,
+  BadRequestException,
   Catch,
   ExceptionFilter,
   HttpStatus,
@@ -10,6 +11,7 @@ import {
   EntityError,
   NotFoundError,
 } from '../errors/exceptions';
+import { extractValidationMessage } from '../utils/http/validation-error-message.util';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -29,6 +31,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else if (exception instanceof EntityError) {
       status = HttpStatus.UNPROCESSABLE_ENTITY;
       message = exception.message;
+    } else if (exception instanceof BadRequestException) {
+      status = HttpStatus.BAD_REQUEST;
+      const responseMessage = exception.getResponse();
+      message = extractValidationMessage(responseMessage);
     } else if (exception instanceof Error) {
       message = exception.message;
     }

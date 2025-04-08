@@ -1,9 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
-import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
 import { GetCompaniesByPersonIdUseCase } from '../application/use-cases/get-companies-by-person-id.usecase';
 import { GetPersonsByCompanyIdUseCase } from '../application/use-cases/get-persons-by-company-id.usecase';
 import { LinkPersonToCompanyUseCase } from '../application/use-cases/link-person-to-company.usecase';
+import {
+  LinkPersonToCompanyDto,
+  LinkPersonToCompanyResponseDto,
+} from './dtos/link-person-company.dto';
 
 @Controller('person-company')
 export class PersonCompanyController {
@@ -15,13 +18,8 @@ export class PersonCompanyController {
 
   @Post('assign')
   async link(
-    @Body()
-    body: {
-      personId: string;
-      companyId: string;
-      permissionType: PermissionTypesEnum;
-    },
-  ) {
+    @Body() body: LinkPersonToCompanyDto,
+  ): Promise<LinkPersonToCompanyResponseDto> {
     await this.linkPersonToCompany.execute(body);
     return { message: 'Link created successfully' };
   }

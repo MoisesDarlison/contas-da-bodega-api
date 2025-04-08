@@ -8,7 +8,7 @@ import { PersonDocument } from '../contracts/person-document.contract';
 @Injectable()
 export class PersonRepositoryImpl implements PersonRepository {
   private toEntity = (data: PersonDocument): Person => {
-    return Person.clone(data);
+    return Person.clone(data._id, data);
   };
 
   constructor(
@@ -17,7 +17,7 @@ export class PersonRepositoryImpl implements PersonRepository {
 
   async create(person: Person): Promise<Person> {
     const doc: PersonDocument = await this.personModel.create({
-      _id: person.getId(),
+      id: person.getId(),
       name: person['name'],
       email: person['email'],
       phone: person['phone'],
@@ -29,14 +29,24 @@ export class PersonRepositoryImpl implements PersonRepository {
     return this.toEntity(doc);
   }
 
-  async findAll(): Promise<Person[]> {
-    const docs = await this.personModel.find();
-    return docs.map(this.toEntity);
-  }
-
   async findById(id: string): Promise<Person | null> {
     const doc = await this.personModel.findById(id);
     if (!doc) return null;
     return this.toEntity(doc);
+  }
+
+  async findAll(
+    page: number,
+    limit: number,
+  ): Promise<{ docs: Person[]; total: number }> {
+    const skip = (page - 1) * limit;
+    const [docs, total] = await Promise.all([
+      this.personModel.find().skip(skip).limit(limit).lean(),
+      this.personModel.countDocuments(),
+    ]);
+    return {
+      docs: docs.map(this.toEntity),
+      total,
+    };
   }
 }

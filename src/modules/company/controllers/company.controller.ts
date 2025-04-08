@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CreateCompanyUseCase } from '../application/use-cases/create-company.usecase';
 import { FindAllCompanyUseCase } from '../application/use-cases/find-all-company.usecase';
-import { CreateCompanyDto } from './dtos/create-company.dto';
+import { CreateCompanyBodyDto } from './dtos/create-company.dto';
+import { FindAllCompanyQueryDto } from './dtos/find-all-company.dto';
 
 @Controller('company')
 export class CompanyController {
@@ -11,13 +12,13 @@ export class CompanyController {
   ) {}
 
   @Post('create')
-  async create(@Body() dto: CreateCompanyDto) {
-    const person = await this.createUseCase.execute(dto);
-    return person;
+  async create(@Body() body: CreateCompanyBodyDto) {
+    return await this.createUseCase.execute(body);
   }
 
   @Get()
-  async findAll() {
-    return await this.findAllUseCase.execute();
+  async findAll(@Query() query: FindAllCompanyQueryDto) {
+    const { page = 1, limit = 10 } = query;
+    return await this.findAllUseCase.execute({ page, limit });
   }
 }

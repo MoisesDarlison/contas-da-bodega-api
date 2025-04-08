@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class CreateCompanyDto {
+export class CreateCompanyBodyDto {
   @IsString()
   @IsNotEmpty()
   name: string;
