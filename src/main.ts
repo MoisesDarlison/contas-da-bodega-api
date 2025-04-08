@@ -17,5 +17,4 @@ async function bootstrap() {
 }
 void bootstrap();
 
-//TODO: continuar a implemtantar as interfaces e depois testes
-
+//TODO: logs e testes

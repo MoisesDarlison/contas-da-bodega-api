@@ -7,14 +7,17 @@ import { PersonModule } from '../person/person.module';
 import { GetCompaniesByPersonIdUseCase } from './application/use-cases/get-companies-by-person-id.usecase';
 import { GetPersonsByCompanyIdUseCase } from './application/use-cases/get-persons-by-company-id.usecase';
 import { LinkPersonToCompanyUseCase } from './application/use-cases/link-person-to-company.usecase';
-import { PersonCompanyRepositoryImpl } from './infrastructure/database/mongodb/repositories/person-company.repository.impl';
-import { PersonCompanySchema } from './infrastructure/database/mongodb/schemas/person-company.schema';
 import { PersonCompanyController } from './controllers/person-company.controller';
+import { PersonCompanyRepositoryImpl } from './infrastructure/database/mongodb/repositories/person-company.repository.impl';
+import {
+  PersonCompany,
+  PersonCompanySchema,
+} from './infrastructure/database/mongodb/schemas/person-company.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'PersonCompany', schema: PersonCompanySchema },
+      { name: PersonCompany.name, schema: PersonCompanySchema },
     ]),
     PersonModule,
     CompanyModule,

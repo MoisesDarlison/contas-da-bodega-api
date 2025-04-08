@@ -1,17 +1,27 @@
-import { Schema } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-export const PersonSchema = new Schema(
-  {
-    _id: { type: String, alias: 'id' },
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true, index: true },
-    isActive: { type: Boolean, default: true },
-    phone: { type: String },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
-  },
-  {
-    _id: false,
-    collection: 'persons',
-  },
-);
+export type PersonDocument = HydratedDocument<Person>;
+
+@Schema({
+  collection: 'persons',
+  timestamps: true,
+})
+export class Person {
+  @Prop({ type: String, alias: 'id' })
+  _id: string;
+
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ required: true, unique: true, index: true })
+  email: string;
+
+  @Prop({ default: true })
+  isActive: boolean;
+
+  @Prop()
+  phone?: string;
+}
+
+export const PersonSchema = SchemaFactory.createForClass(Person);
