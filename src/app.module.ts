@@ -6,10 +6,12 @@ import { AppController } from './app.controller';
 import { CompanyModule } from './modules/company/company.module';
 import { PersonCompanyModule } from './modules/person-company/person-company.module';
 import { PersonModule } from './modules/person/person.module';
+import { LoggerModule } from './shared/logging/logger.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    LoggerModule,
     PersonModule,
     CompanyModule,
     PersonCompanyModule,
@@ -18,5 +20,6 @@ import { PersonModule } from './modules/person/person.module';
     }),
   ],
   controllers: [AppController],
+  providers: [],
 })
 export class AppModule {}

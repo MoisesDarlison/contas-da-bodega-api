@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PersonCompanyRepository } from './domain/repositories/person-company.repository';
 
+import { LoggerService } from 'src/shared/logging/services/logger.service';
 import { CompanyModule } from '../company/company.module';
 import { PersonModule } from '../person/person.module';
 import { GetCompaniesByPersonIdUseCase } from './application/use-cases/get-companies-by-person-id.usecase';
@@ -28,6 +29,7 @@ import {
       provide: PersonCompanyRepository,
       useClass: PersonCompanyRepositoryImpl,
     },
+    LoggerService,
     LinkPersonToCompanyUseCase,
     GetCompaniesByPersonIdUseCase,
     GetPersonsByCompanyIdUseCase,

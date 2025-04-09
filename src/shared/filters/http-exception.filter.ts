@@ -4,6 +4,7 @@ import {
   Catch,
   ExceptionFilter,
   HttpStatus,
+  LoggerService,
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
@@ -15,7 +16,9 @@ import { extractValidationMessage } from '../utils/http/validation-error-message
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  catch(exception: any, host: ArgumentsHost) {
+  constructor(private readonly logger: LoggerService) {}
+
+  catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
@@ -38,6 +41,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else if (exception instanceof Error) {
       message = exception.message;
     }
+
+    this.logger.error(
+      `Status: ${status} | Message: ${message}`,
+      exception instanceof Error ? exception.stack : undefined,
+      'AllExceptionsFilter',
+    );
 
     response.status(status).json({ statusCode: status, message });
   }

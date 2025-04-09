@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { CreateCompanyUseCase } from './application/use-cases/create-company.usecase';
 import { FindAllCompanyUseCase } from './application/use-cases/find-all-company.usecase';
 import { CompanyController } from './controllers/company.controller';
