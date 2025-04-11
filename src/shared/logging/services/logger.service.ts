@@ -9,9 +9,8 @@ export class LoggerService {
     private readonly requestContext: RequestContextService,
   ) {}
 
-  private formatPrefix(handler?: string) {
-    const requestId = this.requestContext.getRequestId();
-    return `[${requestId}]${handler ? ` ${handler}` : ''}`;
+  private getRequestId() {
+    return this.requestContext.getRequestId() || '';
   }
 
   log(
@@ -20,12 +19,7 @@ export class LoggerService {
     payload?: unknown,
     meta?: Record<string, any>,
   ) {
-    this.adapter.log(
-      `${this.formatPrefix(context)} -> ${message}`,
-      context,
-      payload,
-      meta,
-    );
+    this.adapter.log(message, this.getRequestId(), context, payload, meta);
   }
 
   msg(
@@ -34,21 +28,14 @@ export class LoggerService {
     payload?: unknown,
     meta?: Record<string, any>,
   ) {
-    this.adapter.log(
-      `${this.formatPrefix(context)} ->> ${message}`,
-      context,
-      payload,
-      meta,
-    );
+    this.adapter.log(message, this.getRequestId(), context, payload, meta);
   }
 
   error(message: string, trace?: string, context?: string) {
-    const prefix = this.formatPrefix(context);
-    this.adapter.error(`${prefix} | ${message}`, trace, context);
+    this.adapter.error(message, this.getRequestId(), trace, context);
   }
 
   warn(message: string, context?: string) {
-    const prefix = this.formatPrefix(context);
-    this.adapter.warn(`${prefix} | ${message}`, context);
+    this.adapter.warn(message, this.getRequestId(), context);
   }
 }

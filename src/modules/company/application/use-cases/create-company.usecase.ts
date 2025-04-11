@@ -22,9 +22,10 @@ export class CreateCompanyUseCase {
   async execute(
     input: ICreateCompanyUseCaseInput,
   ): Promise<ICreateCompanyUseCaseOutput> {
-    const prefix = `${CreateCompanyUseCase.name}-${this.execute.name}`;
     try {
-      this.logger.msg('teste 123 ', prefix);
+      const prefix = `${CreateCompanyUseCase.name}.${this.execute.name}`;
+      this.logger.log('Create Company UseCase', prefix, { input });
+
       const company = Company.create(input);
       const output = await this.repo.create(company);
       return companyDomainToApplication(output);

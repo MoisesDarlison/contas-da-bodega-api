@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
 import { CreatePersonUseCase } from './application/use-cases/create-person.usecase';
 import { FindAllPersonUseCase } from './application/use-cases/find-all-person.usecase';
 import { PersonController } from './controllers/person.controller';
@@ -17,7 +16,6 @@ import {
   ],
   controllers: [PersonController],
   providers: [
-    LoggerService,
     CreatePersonUseCase,
     FindAllPersonUseCase,
     {

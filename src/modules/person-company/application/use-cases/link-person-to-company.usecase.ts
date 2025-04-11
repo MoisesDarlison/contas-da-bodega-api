@@ -6,17 +6,22 @@ import { CompanyRepository } from 'src/modules/company/domain/repositories/compa
 import { PersonRepository } from 'src/modules/person/domain/repositories/person.repository';
 import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
 import { ConflictError } from 'src/shared/errors/exceptions';
+import { LoggerService } from 'src/shared/logging/services/logger.service';
 import { ILinkPersonToCompanyUseCaseInput } from '../contracts/link-person-to-company.contract';
 
 @Injectable()
 export class LinkPersonToCompanyUseCase {
   constructor(
+    private readonly logger: LoggerService,
     private readonly personCompanyRepo: PersonCompanyRepository,
     private readonly personRepo: PersonRepository,
     private readonly companyRepo: CompanyRepository,
   ) {}
 
   async execute(input: ILinkPersonToCompanyUseCaseInput): Promise<void> {
+    const prefix = `${LinkPersonToCompanyUseCase.name}.${this.execute.name}`;
+    this.logger.log('Link Person To Company UseCase', prefix, input);
+
     const person = await this.personRepo.findById(input.personId);
     if (!person) {
       throw new NotFoundException(ERROR_MESSAGES.PERSON_NOT_FOUND);

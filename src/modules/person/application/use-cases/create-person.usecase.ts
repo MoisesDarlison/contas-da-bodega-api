@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
 import { ConflictError } from 'src/shared/errors/exceptions';
+import { LoggerService } from 'src/shared/logging/services/logger.service';
 import { isMongoError } from 'src/shared/utils/mongo/is-mongo-error.util';
 import { Person } from '../../domain/entities/person.entity';
 import { PersonRepository } from '../../domain/repositories/person.repository';
@@ -13,12 +14,18 @@ import { personDomainToApplication } from '../mappers/person.mapper';
 
 @Injectable()
 export class CreatePersonUseCase {
-  constructor(private readonly repo: PersonRepository) {}
+  constructor(
+    private readonly logger: LoggerService,
+    private readonly repo: PersonRepository,
+  ) {}
 
   async execute(
     input: ICreatePersonUseCaseInput,
   ): Promise<ICreatePersonUseCaseOutput> {
     try {
+      const prefix = `${CreatePersonUseCase.name}.${this.execute.name}`;
+      this.logger.log('Create Person UseCase', prefix, input);
+
       const person = Person.create(input);
       const output = await this.repo.create(person);
       return personDomainToApplication(output);

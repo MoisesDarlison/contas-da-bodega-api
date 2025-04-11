@@ -4,7 +4,6 @@ import {
   Catch,
   ExceptionFilter,
   HttpStatus,
-  LoggerService,
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
@@ -12,6 +11,7 @@ import {
   EntityError,
   NotFoundError,
 } from '../errors/exceptions';
+import { LoggerService } from '../logging/services/logger.service';
 import { extractValidationMessage } from '../utils/http/validation-error-message.util';
 
 @Catch()

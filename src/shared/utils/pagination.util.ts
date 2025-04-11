@@ -8,7 +8,7 @@ export function paginate<T>(
 
   return {
     data,
-    currentPage: page,
+    currentPage: Number(page) || 0,
     totalPages,
     totalItems: total,
   };

@@ -5,7 +5,6 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { randomUUID } from 'node:crypto';
 import { Observable, tap } from 'rxjs';
 import { LoggerService } from '../services/logger.service';
 import { RequestContextService } from '../services/request-context.service';
@@ -32,9 +31,6 @@ export class LoggerInterceptor implements NestInterceptor {
     const http = context.switchToHttp();
     const request = http.getRequest<EnhancedRequest>();
     const handler = `${context.getClass().name}.${context.getHandler().name}`;
-    const requestId = randomUUID();
-
-    this.requestContext.setRequestId(requestId);
     const start = Date.now();
 
     this.logger.log('Request received', handler, {
