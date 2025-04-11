@@ -2,7 +2,7 @@ import { createLogger } from 'winston';
 import { ILogger } from '../contracts/logger.interface';
 import { winstonLogger } from './winston.config';
 
-export class WinstonLoggerAdapter implements ILogger {
+export class WinstonLoggerAdapterImpl implements ILogger {
   private readonly logger = createLogger(winstonLogger);
 
   log(

@@ -1,5 +1,5 @@
 import { Global, Module } from '@nestjs/common';
-import { WinstonLoggerAdapter } from './adapters/winston.adapter';
+import { WinstonLoggerAdapterImpl } from './adapters/winston.adapter';
 import { ILogger } from './contracts/logger.interface';
 import { LoggerService } from './services/logger.service';
 import { RequestContextService } from './services/request-context.service';
@@ -10,7 +10,7 @@ import { RequestContextService } from './services/request-context.service';
     RequestContextService,
     {
       provide: ILogger,
-      useClass: WinstonLoggerAdapter,
+      useClass: WinstonLoggerAdapterImpl,
     },
     LoggerService,
   ],

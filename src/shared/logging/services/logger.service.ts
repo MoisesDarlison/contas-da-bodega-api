@@ -3,7 +3,7 @@ import { ILogger } from '../contracts/logger.interface';
 import { RequestContextService } from './request-context.service';
 
 @Injectable()
-export class LoggerService implements ILogger {
+export class LoggerService {
   constructor(
     private readonly adapter: ILogger,
     private readonly requestContext: RequestContextService,
@@ -21,7 +21,21 @@ export class LoggerService implements ILogger {
     meta?: Record<string, any>,
   ) {
     this.adapter.log(
-      `${this.formatPrefix(context)} | ${message}`,
+      `${this.formatPrefix(context)} -> ${message}`,
+      context,
+      payload,
+      meta,
+    );
+  }
+
+  msg(
+    message: string,
+    context?: string,
+    payload?: unknown,
+    meta?: Record<string, any>,
+  ) {
+    this.adapter.log(
+      `${this.formatPrefix(context)} ->> ${message}`,
       context,
       payload,
       meta,
@@ -36,15 +50,5 @@ export class LoggerService implements ILogger {
   warn(message: string, context?: string) {
     const prefix = this.formatPrefix(context);
     this.adapter.warn(`${prefix} | ${message}`, context);
-  }
-
-  debug(message: string, context?: string) {
-    const prefix = this.formatPrefix(context);
-    this.adapter.debug(`${prefix} | ${message}`, context);
-  }
-
-  verbose(message: string, context?: string) {
-    const prefix = this.formatPrefix(context);
-    this.adapter.verbose(`${prefix} | ${message}`, context);
   }
 }

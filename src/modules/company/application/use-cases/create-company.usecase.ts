@@ -24,7 +24,7 @@ export class CreateCompanyUseCase {
   ): Promise<ICreateCompanyUseCaseOutput> {
     const prefix = `${CreateCompanyUseCase.name}-${this.execute.name}`;
     try {
-      this.logger.log('teste 123 ', prefix);
+      this.logger.msg('teste 123 ', prefix);
       const company = Company.create(input);
       const output = await this.repo.create(company);
       return companyDomainToApplication(output);

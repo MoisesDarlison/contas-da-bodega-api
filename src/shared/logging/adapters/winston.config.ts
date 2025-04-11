@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createLogger, format, transports } from 'winston';
 
 export const winstonLogger = createLogger({
@@ -14,7 +15,7 @@ export const winstonLogger = createLogger({
         level: string;
         message: string;
       }) => {
-        return `[${timestamp}] ${level.toUpperCase()} | ${message}`;
+        return `[${timestamp}] ${message}`;
       },
     ),
   ),
