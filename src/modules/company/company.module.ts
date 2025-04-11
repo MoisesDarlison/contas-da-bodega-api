@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CreateCompanyUseCase } from './application/use-cases/create-company.usecase';
 import { FindAllCompanyUseCase } from './application/use-cases/find-all-company.usecase';
 import { CompanyController } from './controllers/company.controller';
-import { CompanyRepository } from './domain/repositories/company.repository';
+import { ICompanyRepository } from './domain/repositories/company.repository';
 import { CompanyRepositoryImpl } from './infrastructure/database/mongodb/repositories/company.repository.impl';
 import {
   Company,
@@ -20,10 +20,10 @@ import {
     CreateCompanyUseCase,
     FindAllCompanyUseCase,
     {
-      provide: CompanyRepository,
+      provide: ICompanyRepository,
       useClass: CompanyRepositoryImpl,
     },
   ],
-  exports: [CompanyRepository],
+  exports: [ICompanyRepository],
 })
 export class CompanyModule {}

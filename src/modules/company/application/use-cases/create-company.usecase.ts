@@ -5,7 +5,7 @@ import { ConflictError } from 'src/shared/errors/exceptions';
 import { LoggerService } from 'src/shared/logging/services/logger.service';
 import { isMongoError } from 'src/shared/utils/mongo/is-mongo-error.util';
 import { Company } from '../../domain/entities/company.entity';
-import { CompanyRepository } from '../../domain/repositories/company.repository';
+import { ICompanyRepository } from '../../domain/repositories/company.repository';
 import {
   ICreateCompanyUseCaseInput,
   ICreateCompanyUseCaseOutput,
@@ -16,7 +16,7 @@ import { companyDomainToApplication } from '../mappers/company.mapper';
 export class CreateCompanyUseCase {
   constructor(
     private readonly logger: LoggerService,
-    private readonly repo: CompanyRepository,
+    private readonly repo: ICompanyRepository,
   ) {}
 
   async execute(

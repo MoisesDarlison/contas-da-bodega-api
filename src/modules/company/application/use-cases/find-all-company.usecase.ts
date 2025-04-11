@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { LoggerService } from 'src/shared/logging/services/logger.service';
 import { paginate } from 'src/shared/utils/pagination.util';
-import { CompanyRepository } from '../../domain/repositories/company.repository';
+import { ICompanyRepository } from '../../domain/repositories/company.repository';
 import {
   IFindAllCompanyOutput,
   IFindAllCompanyUseCaseInput,
@@ -13,7 +13,7 @@ import { companyDomainToApplication } from '../mappers/company.mapper';
 export class FindAllCompanyUseCase {
   constructor(
     private readonly logger: LoggerService,
-    private readonly repo: CompanyRepository,
+    private readonly repo: ICompanyRepository,
   ) {}
 
   async execute(
