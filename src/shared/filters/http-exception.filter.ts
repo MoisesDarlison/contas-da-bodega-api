@@ -4,6 +4,7 @@ import {
   Catch,
   ExceptionFilter,
   HttpStatus,
+  NotFoundException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
@@ -26,6 +27,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
     let message = 'Internal server error';
 
     if (exception instanceof NotFoundError) {
+      status = HttpStatus.NOT_FOUND;
+      message = exception.message;
+    } else if (exception instanceof NotFoundException) {
       status = HttpStatus.NOT_FOUND;
       message = exception.message;
     } else if (exception instanceof ConflictError) {
