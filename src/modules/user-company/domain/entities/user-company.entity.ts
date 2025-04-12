@@ -64,13 +64,16 @@ export class UserCompany {
     return this.companyId;
   }
 
-  getPermissionType(): PermissionTypesEnum {
-    return this.permissionType;
-  }
-
-  setPermissionType(newType: PermissionTypesEnum): void {
-    this.permissionType = newType;
-    this.touch();
+  public toObject() {
+    return {
+      userId: this.userId,
+      companyId: this.companyId,
+      permissionType: this.permissionType,
+      isActive: this.isActive,
+      editorInfo: this.editorInfo,
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
+    };
   }
 
   private touch(): void {

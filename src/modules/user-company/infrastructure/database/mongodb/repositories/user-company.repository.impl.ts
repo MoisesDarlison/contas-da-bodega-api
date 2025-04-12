@@ -19,13 +19,8 @@ export class UserCompanyRepositoryImpl implements AUserCompanyRepository {
   async create(link: UserCompany): Promise<void> {
     const prefix = `${UserCompanyRepositoryImpl.name}.${this.create.name}`;
     this.logger.log('User and Company DB', prefix);
-    await this.model.create({
-      userId: link.getUserId(),
-      companyId: link.getCompanyId(),
-      permissionType: link.getPermissionType(),
-      isActive: link['isActive'],
-      editorInfo: link['editorInfo'],
-    });
+    const input = link.toObject();
+    await this.model.create(input);
   }
 
   async findCompaniesByUserId(userId: string): Promise<UserCompany[]> {

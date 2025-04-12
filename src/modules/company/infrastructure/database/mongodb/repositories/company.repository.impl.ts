@@ -22,12 +22,8 @@ export class CompanyRepositoryImpl implements ACompanyRepository {
     const prefix = `${CompanyRepositoryImpl.name}.${this.create.name}`;
     this.logger.log('Companies DB', prefix);
 
-    const doc: CompanyDocument = await this.companyModel.create({
-      id: company.getId(),
-      name: company['name'],
-      email: company.getEmail(),
-      phone: company['phone'],
-    });
+    const input = company.toObject();
+    const doc: CompanyDocument = await this.companyModel.create(input);
     return this.toEntity(doc);
   }
 
@@ -40,25 +36,22 @@ export class CompanyRepositoryImpl implements ACompanyRepository {
     return this.toEntity(doc);
   }
 
-  async findAll(
-    page: number = 1,
-    limit: number = 10,
-  ): Promise<{ docs: Company[]; total: number }> {
+  async findAll(page: number = 1, limit: number = 10): Promise<Company[]> {
     const prefix = `${CompanyRepositoryImpl.name}.${this.findAll.name}`;
     this.logger.log('Companies DB', prefix);
 
     const skip = (page - 1) * limit;
-    const [docs, total] = await Promise.all([
-      this.companyModel
-        .find({ deletedAt: null })
-        .skip(skip)
-        .limit(limit)
-        .lean(),
-      this.companyModel.countDocuments(),
-    ]);
-    return {
-      docs: docs.map(this.toEntity),
-      total: total,
-    };
+    const docs = await this.companyModel
+      .find({ deletedAt: null })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+    return docs.map(this.toEntity);
+  }
+
+  async countDocuments(): Promise<number> {
+    const prefix = `${CompanyRepositoryImpl.name}.${this.countDocuments.name}`;
+    this.logger.log('Companies DB', prefix);
+    return await this.companyModel.countDocuments();
   }
 }

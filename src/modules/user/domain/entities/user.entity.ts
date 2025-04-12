@@ -69,13 +69,15 @@ export class User {
     return this.id;
   }
 
-  getEmail(): string {
-    return this.email.getEmail();
-  }
-
-  updatePhone(newPhone: string) {
-    this.phone = newPhone;
-    this.touch();
+  toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email.getEmail(),
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
+      phone: this.phone || null,
+    };
   }
 
   private touch() {

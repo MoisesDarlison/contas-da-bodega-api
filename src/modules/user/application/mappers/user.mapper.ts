@@ -1,9 +1,10 @@
 import { User } from '../../domain/entities/user.entity';
 
 export function userDomainToApplication(user: User) {
+  const output = user.toObject();
   return {
-    id: user.getId(),
-    name: user['name'],
-    email: user.getEmail(),
+    id: output.id,
+    name: output.name,
+    email: output.email,
   };
 }

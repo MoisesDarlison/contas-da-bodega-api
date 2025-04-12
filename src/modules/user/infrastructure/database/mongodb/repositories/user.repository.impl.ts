@@ -21,16 +21,11 @@ export class UserRepositoryImpl implements AUserRepository {
     const prefix = `${UserRepositoryImpl.name}.${this.create.name}`;
     this.logger.log('User DB', prefix);
 
+    const input = user.toObject();
     const doc: UserDocument = await this.userModel.create({
-      id: user.getId(),
-      name: user['name'],
-      email: user.getEmail(),
+      ...input,
       password: user['password'],
-      phone: user['phone'],
-      createdAt: user['createdAt'],
-      updatedAt: user['updatedAt'],
     });
-
     return this.toEntity(doc);
   }
 
@@ -43,21 +38,22 @@ export class UserRepositoryImpl implements AUserRepository {
     return this.toEntity(doc);
   }
 
-  async findAll(
-    page: number,
-    limit: number,
-  ): Promise<{ docs: User[]; total: number }> {
+  async findAll(page: number, limit: number): Promise<User[]> {
     const prefix = `${UserRepositoryImpl.name}.${this.findAll.name}`;
     this.logger.log('User DB', prefix);
 
     const skip = (page - 1) * limit;
-    const [docs, total] = await Promise.all([
-      this.userModel.find({ deletedAt: null }).skip(skip).limit(limit).lean(),
-      this.userModel.countDocuments(),
-    ]);
-    return {
-      docs: docs.map(this.toEntity),
-      total,
-    };
+    const docs = await this.userModel
+      .find({ deletedAt: null })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+    return docs.map(this.toEntity);
+  }
+
+  async countDocuments(): Promise<number> {
+    const prefix = `${UserRepositoryImpl.name}.${this.countDocuments.name}`;
+    this.logger.log('User DB', prefix);
+    return await this.userModel.countDocuments();
   }
 }

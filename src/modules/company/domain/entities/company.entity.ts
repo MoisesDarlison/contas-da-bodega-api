@@ -53,13 +53,15 @@ export class Company {
     return this.id;
   }
 
-  getEmail(): string {
-    return this.email.getEmail();
-  }
-
-  updateEmail(newEmail: string) {
-    this.email = new Email(newEmail);
-    this.touch();
+  toObject() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email.getEmail(),
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
+      phone: this.phone || null,
+    };
   }
 
   private touch() {
