@@ -2,12 +2,13 @@ import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'node:crypto';
 import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
 import { EntityError } from 'src/shared/errors/exceptions';
+import { Email } from '../value-objects/email.vo';
 
 export class User {
   private constructor(
     private id: string,
     private name: string,
-    private email: string,
+    private email: Email,
     private password: string,
     private isActive: boolean,
     private createdAt: Date,
@@ -26,14 +27,14 @@ export class User {
     const id = randomUUID();
     const SALT = Number(process.env.SALT_PWD) || 10;
 
-    if (!input.name || !input.email) {
-      throw new EntityError(ERROR_MESSAGES.NAME_EMAIL_ARE_REQUIRED);
+    if (!input.name) {
+      throw new EntityError(ERROR_MESSAGES.NAME_ARE_REQUIRED);
     }
 
     return new User(
       id,
       input.name,
-      input.email,
+      new Email(input.email),
       bcrypt.hashSync(input.password, SALT),
       false,
       now,
@@ -58,7 +59,7 @@ export class User {
     return new User(
       id,
       props.name,
-      props.email,
+      new Email(props.email),
       '',
       props.isActive,
       props.createdAt,
@@ -72,14 +73,8 @@ export class User {
     return this.id;
   }
 
-  deactivate() {
-    this.isActive = false;
-    this.touch();
-  }
-
-  activate() {
-    this.isActive = true;
-    this.touch();
+  getEmail(): string {
+    return this.email.getEmail();
   }
 
   updatePhone(newPhone: string) {

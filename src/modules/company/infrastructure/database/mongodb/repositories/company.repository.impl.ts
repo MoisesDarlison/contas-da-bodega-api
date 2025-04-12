@@ -25,7 +25,7 @@ export class CompanyRepositoryImpl implements ICompanyRepository {
     const doc: CompanyDocument = await this.companyModel.create({
       id: company.getId(),
       name: company['name'],
-      email: company['email'],
+      email: company.getEmail(),
       phone: company['phone'],
     });
     return this.toEntity(doc);

@@ -4,6 +4,6 @@ export function userDomainToApplication(user: User) {
   return {
     id: user.getId(),
     name: user['name'],
-    email: user['email'],
+    email: user['email'].getEmail(),
   };
 }

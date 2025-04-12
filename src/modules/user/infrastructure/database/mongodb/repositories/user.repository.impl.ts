@@ -24,7 +24,7 @@ export class UserRepositoryImpl implements IUserRepository {
     const doc: UserDocument = await this.userModel.create({
       id: user.getId(),
       name: user['name'],
-      email: user['email'],
+      email: user.getEmail(),
       password: user['password'],
       phone: user['phone'],
       isActive: user['isActive'],

@@ -1,12 +1,13 @@
 import { randomUUID } from 'node:crypto';
 import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
 import { EntityError } from 'src/shared/errors/exceptions';
+import { Email } from '../value-objects/email.vo';
 
 export class Company {
   private constructor(
     private readonly id: string,
     private name: string,
-    private email: string,
+    private email: Email,
     private readonly createdAt: Date,
     private updatedAt: Date,
     private phone?: string,
@@ -18,13 +19,12 @@ export class Company {
     email: string;
     phone?: string;
   }): Company {
-    if (!input.name || !input.email) {
-      throw new EntityError(ERROR_MESSAGES.NAME_EMAIL_ARE_REQUIRED);
-    }
+    if (!input.name) throw new EntityError(ERROR_MESSAGES.NAME_ARE_REQUIRED);
 
     const now = new Date();
     const id = randomUUID();
-    return new Company(id, input.name, input.email, now, now, input.phone);
+    const email = new Email(input.email);
+    return new Company(id, input.name, email, now, now, input.phone);
   }
 
   static clone(
@@ -41,7 +41,7 @@ export class Company {
     return new Company(
       id,
       props.name,
-      props.email,
+      new Email(props.email),
       props.createdAt,
       props.updatedAt,
       props.phone,
@@ -53,8 +53,12 @@ export class Company {
     return this.id;
   }
 
+  getEmail(): string {
+    return this.email.getEmail();
+  }
+
   updateEmail(newEmail: string) {
-    this.email = newEmail;
+    this.email = new Email(newEmail);
     this.touch();
   }
 
