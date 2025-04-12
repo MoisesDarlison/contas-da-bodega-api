@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { AUserRepository } from 'src/modules/user/domain/contracts/user-repository.abstract';
 import { User } from 'src/modules/user/domain/entities/user.entity';
-import { IUserRepository } from 'src/modules/user/domain/repositories/user.repository';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
+import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
 import { UserDocument } from '../contracts/user-document.contract';
 
 @Injectable()
-export class UserRepositoryImpl implements IUserRepository {
+export class UserRepositoryImpl implements AUserRepository {
   private toEntity = (data: UserDocument): User => {
     return User.clone(data._id, data);
   };

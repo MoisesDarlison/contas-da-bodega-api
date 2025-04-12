@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 
-export abstract class IUserRepository {
+export abstract class AUserRepository {
   abstract create(user: User): Promise<User>;
   abstract findById(id: string): Promise<User | null>;
   abstract findAll(

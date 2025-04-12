@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
-import { paginate } from 'src/shared/utils/pagination.util';
-import { IUserRepository } from '../../domain/repositories/user.repository';
+import { paginate } from 'src/shared/application/utils/pagination.util';
+import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
+import { AUserRepository } from '../../domain/contracts/user-repository.abstract';
 import {
-  IFindAllUserOutput,
-  IFindAllUserUseCaseInput,
+    IFindAllUserOutput,
+    IFindAllUserUseCaseInput,
 } from '../contracts/find-all-user.contract';
 import { userDomainToApplication } from '../mappers/user.mapper';
 
 @Injectable()
 export class FindAllUsersUseCase {
   constructor(
-    private readonly repo: IUserRepository,
+    private readonly repo: AUserRepository,
     private readonly logger: LoggerService,
   ) {}
 

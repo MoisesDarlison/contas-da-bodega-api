@@ -1,11 +1,11 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AllExceptionsFilter } from './shared/filters/http-exception.filter';
-import { LoggerInterceptor } from './shared/logging/interceptors/logger.interceptor';
-import { TraceRequestIdMiddleware } from './shared/logging/middlewares/logger.middleware';
-import { LoggerService } from './shared/logging/services/logger.service';
-import { RequestContextService } from './shared/logging/services/request-context.service';
+import { AllExceptionsFilter } from './shared/application/filters/http-exception.filter';
+import { LoggerInterceptor } from './shared/infrastructure/logging/interceptors/logger.interceptor';
+import { TraceRequestIdMiddleware } from './shared/infrastructure/logging/middlewares/logger.middleware';
+import { LoggerService } from './shared/infrastructure/logging/services/logger.service';
+import { RequestContextService } from './shared/infrastructure/logging/services/request-context.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

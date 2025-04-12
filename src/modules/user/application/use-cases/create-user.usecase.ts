@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
-import { ConflictError } from 'src/shared/errors/exceptions';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
-import { isMongoError } from 'src/shared/utils/mongo/is-mongo-error.util';
+import { isMongoError } from 'src/shared/application/utils/mongo/is-mongo-error.util';
+import { ConflictError } from 'src/shared/domain/errors';
+import { ERROR_MESSAGES } from 'src/shared/domain/errors/error-messages';
+import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
+import { AUserRepository } from '../../domain/contracts/user-repository.abstract';
 import { User } from '../../domain/entities/user.entity';
-import { IUserRepository } from '../../domain/repositories/user.repository';
 import {
   ICreateUserUseCaseInput,
   ICreateUserUseCaseOutput,
@@ -16,7 +16,7 @@ import { userDomainToApplication } from '../mappers/user.mapper';
 export class CreateUserUseCase {
   constructor(
     private readonly logger: LoggerService,
-    private readonly repo: IUserRepository,
+    private readonly repo: AUserRepository,
   ) {}
 
   async execute(

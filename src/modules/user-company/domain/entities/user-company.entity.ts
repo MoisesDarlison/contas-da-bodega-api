@@ -1,4 +1,4 @@
-import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
+import { PermissionTypesEnum } from 'src/shared/domain/enums/permission-types.enum';
 interface IEditorInfo {
   userid: string;
   updatedAt: Date;

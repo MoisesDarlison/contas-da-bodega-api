@@ -6,7 +6,7 @@ import {
   IsStrongPassword,
   Validate,
 } from 'class-validator';
-import { MatchPasswordsConstraint } from 'src/shared/decorators/MatchPasswordDto.decorator';
+import { MatchPasswordsConstraint } from 'src/shared/domain/decorators/match-password-dto.decorator';
 
 export class CreateRequestUserDto {
   @IsNotEmpty()

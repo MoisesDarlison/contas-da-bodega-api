@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IUserCompanyRepository } from '../../domain/repositories/user-company.repository';
+import { AUserCompanyRepository } from '../../domain/contracts/user-company-repository.abstract';
 
-import { ICompanyRepository } from 'src/modules/company/domain/repositories/company.repository';
-import { IUserRepository } from 'src/modules/user/domain/repositories/user.repository';
-import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
-import { ConflictError } from 'src/shared/errors/exceptions';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
+import { ACompanyRepository } from 'src/modules/company/domain/contracts/company-repository.abstract';
+import { AUserRepository } from 'src/modules/user/domain/contracts/user-repository.abstract';
+import { ConflictError } from 'src/shared/domain/errors';
+import { ERROR_MESSAGES } from 'src/shared/domain/errors/error-messages';
+import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
 import { UserCompany } from '../../domain/entities/user-company.entity';
 import { ILinkUserToCompanyUseCaseInput } from '../contracts/link-user-to-company.contract';
 
@@ -13,9 +13,9 @@ import { ILinkUserToCompanyUseCaseInput } from '../contracts/link-user-to-compan
 export class LinkUserToCompanyUseCase {
   constructor(
     private readonly logger: LoggerService,
-    private readonly userCompanyRepo: IUserCompanyRepository,
-    private readonly userRepo: IUserRepository,
-    private readonly companyRepo: ICompanyRepository,
+    private readonly userCompanyRepo: AUserCompanyRepository,
+    private readonly userRepo: AUserRepository,
+    private readonly companyRepo: ACompanyRepository,
   ) {}
 
   async execute(input: ILinkUserToCompanyUseCaseInput): Promise<void> {

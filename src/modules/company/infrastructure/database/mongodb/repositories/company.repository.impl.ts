@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ACompanyRepository } from 'src/modules/company/domain/contracts/company-repository.abstract';
 import { Company } from 'src/modules/company/domain/entities/company.entity';
-import { ICompanyRepository } from 'src/modules/company/domain/repositories/company.repository';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
+import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
 import { CompanyDocument } from '../contracts/company-document.contract';
 
 @Injectable()
-export class CompanyRepositoryImpl implements ICompanyRepository {
+export class CompanyRepositoryImpl implements ACompanyRepository {
   private toEntity = (data: CompanyDocument): Company => {
     return Company.clone(data._id, data);
   };

@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CreateUserUseCase } from './application/use-cases/create-user.usecase';
 import { FindAllUsersUseCase } from './application/use-cases/find-all-user.usecase';
-import { UserController } from './controllers/user.controller';
-import { IUserRepository } from './domain/repositories/user.repository';
+import { AUserRepository } from './domain/contracts/user-repository.abstract';
 import { UserRepositoryImpl } from './infrastructure/database/mongodb/repositories/user.repository.impl';
 import {
   User,
   UserSchema,
 } from './infrastructure/database/mongodb/schemas/user.schema';
+import { UserController } from './presentation/controllers/user.controller';
 
 @Module({
   imports: [
@@ -19,10 +19,10 @@ import {
     CreateUserUseCase,
     FindAllUsersUseCase,
     {
-      provide: IUserRepository,
+      provide: AUserRepository,
       useClass: UserRepositoryImpl,
     },
   ],
-  exports: [IUserRepository],
+  exports: [AUserRepository],
 })
 export class UserModule {}

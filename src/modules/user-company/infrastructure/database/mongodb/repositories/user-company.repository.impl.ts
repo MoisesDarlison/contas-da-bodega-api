@@ -1,11 +1,11 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { AUserCompanyRepository } from 'src/modules/user-company/domain/contracts/user-company-repository.abstract';
 import { UserCompany } from 'src/modules/user-company/domain/entities/user-company.entity';
-import { IUserCompanyRepository } from 'src/modules/user-company/domain/repositories/user-company.repository';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
+import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
 import { UserCompanyDocument } from '../contracts/user-company-document.contract';
 
-export class UserCompanyRepositoryImpl implements IUserCompanyRepository {
+export class UserCompanyRepositoryImpl implements AUserCompanyRepository {
   private toEntity = (data: UserCompanyDocument): UserCompany => {
     return UserCompany.clone(data);
   };

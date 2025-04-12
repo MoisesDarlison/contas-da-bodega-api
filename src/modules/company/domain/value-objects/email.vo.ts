@@ -1,4 +1,4 @@
-import { EmailBase } from 'src/shared/value-objects/email.vo';
+import { EmailBase } from 'src/shared/domain/value-objects/email-base.vo';
 
 export class Email extends EmailBase {
   constructor(email: string) {

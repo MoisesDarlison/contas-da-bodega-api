@@ -1,8 +1,9 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { CreateCompanyUseCase } from '../application/use-cases/create-company.usecase';
-import { FindAllCompanyUseCase } from '../application/use-cases/find-all-company.usecase';
-import { CreateCompanyBodyDto } from './dtos/create-company.dto';
-import { FindAllCompanyQueryDto } from './dtos/find-all-company.dto';
+
+import { CreateCompanyUseCase } from '../../application/use-cases/create-company.usecase';
+import { FindAllCompanyUseCase } from '../../application/use-cases/find-all-company.usecase';
+import { CreateCompanyBodyDto } from '../dtos/create-company.dto';
+import { FindAllCompanyQueryDto } from '../dtos/find-all-company.dto';
 
 @Controller('company')
 export class CompanyController {

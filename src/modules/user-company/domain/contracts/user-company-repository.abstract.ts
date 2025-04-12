@@ -1,6 +1,6 @@
 import { UserCompany } from '../entities/user-company.entity';
 
-export abstract class IUserCompanyRepository {
+export abstract class AUserCompanyRepository {
   abstract create(link: UserCompany): Promise<void>;
   abstract findLinkByUserIdAndCompanyId(
     userId: string,

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
+import { PermissionTypesEnum } from 'src/shared/domain/enums/permission-types.enum';
 
 export type UserCompanyDocument = HydratedDocument<UserCompany>;
 

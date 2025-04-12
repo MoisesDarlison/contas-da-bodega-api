@@ -1,4 +1,4 @@
-import { EntityError } from '../errors/exceptions';
+import { EntityError } from 'src/shared/domain/errors';
 
 export class EmailBase {
   private readonly value: string;

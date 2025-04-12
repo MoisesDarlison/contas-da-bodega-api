@@ -1,18 +1,18 @@
 import {
-  ArgumentsHost,
-  BadRequestException,
-  Catch,
-  ExceptionFilter,
-  HttpStatus,
-  NotFoundException,
+    ArgumentsHost,
+    BadRequestException,
+    Catch,
+    ExceptionFilter,
+    HttpStatus,
+    NotFoundException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
-  ConflictError,
-  EntityError,
-  NotFoundError,
-} from '../errors/exceptions';
-import { LoggerService } from '../logging/services/logger.service';
+    ConflictError,
+    EntityError,
+    NotFoundError,
+} from '../../domain/errors';
+import { LoggerService } from '../../infrastructure/logging/services/logger.service';
 import { extractValidationMessage } from '../utils/http/validation-error-message.util';
 
 @Catch()

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
-import { ConflictError } from 'src/shared/errors/exceptions';
-import { LoggerService } from 'src/shared/logging/services/logger.service';
-import { isMongoError } from 'src/shared/utils/mongo/is-mongo-error.util';
+import { isMongoError } from 'src/shared/application/utils/mongo/is-mongo-error.util';
+import { ConflictError } from 'src/shared/domain/errors';
+import { ERROR_MESSAGES } from 'src/shared/domain/errors/error-messages';
+import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
+import { ACompanyRepository } from '../../domain/contracts/company-repository.abstract';
 import { Company } from '../../domain/entities/company.entity';
-import { ICompanyRepository } from '../../domain/repositories/company.repository';
 import {
   ICreateCompanyUseCaseInput,
   ICreateCompanyUseCaseOutput,
@@ -16,7 +16,7 @@ import { companyDomainToApplication } from '../mappers/company.mapper';
 export class CreateCompanyUseCase {
   constructor(
     private readonly logger: LoggerService,
-    private readonly repo: ICompanyRepository,
+    private readonly repo: ACompanyRepository,
   ) {}
 
   async execute(

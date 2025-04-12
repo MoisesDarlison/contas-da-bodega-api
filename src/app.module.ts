@@ -6,7 +6,7 @@ import { AppController } from './app.controller';
 import { CompanyModule } from './modules/company/company.module';
 import { UserCompanyModule } from './modules/user-company/user-company.module';
 import { UserModule } from './modules/user/user.module';
-import { LoggerModule } from './shared/logging/logger.module';
+import { LoggerModule } from './shared/infrastructure/logging/logger.module';
 
 @Module({
   imports: [

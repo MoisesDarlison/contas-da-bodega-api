@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'node:crypto';
-import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
-import { EntityError } from 'src/shared/errors/exceptions';
+import { EntityError } from 'src/shared/domain/errors';
+import { ERROR_MESSAGES } from 'src/shared/domain/errors/error-messages';
 import { Email } from '../value-objects/email.vo';
 
 export class User {

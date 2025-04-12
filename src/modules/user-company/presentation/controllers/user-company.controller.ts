@@ -1,12 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
-import { GetCompaniesByUserIdUseCase } from '../application/use-cases/get-companies-by-user-id.usecase';
-import { GetUserByCompanyIdUseCase } from '../application/use-cases/get-user-by-company-id.usecase';
-import { LinkUserToCompanyUseCase } from '../application/use-cases/link-user-to-company.usecase';
+import { GetCompaniesByUserIdUseCase } from '../../application/use-cases/get-companies-by-user-id.usecase';
+import { GetUserByCompanyIdUseCase } from '../../application/use-cases/get-user-by-company-id.usecase';
+import { LinkUserToCompanyUseCase } from '../../application/use-cases/link-user-to-company.usecase';
 import {
   LinkUserToCompanyDto,
   LinkUserToCompanyResponseDto,
-} from './dtos/link-user-company.dto';
+} from '../dtos/link-user-company.dto';
 
 @Controller('user-company')
 export class UserCompanyController {
