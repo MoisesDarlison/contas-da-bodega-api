@@ -5,9 +5,8 @@ export interface UserDocument extends Document {
   name: string;
   email: string;
   password: string;
-  isActive: boolean;
   phone: string;
-  deletedAt: Date | null;
+  deletedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }

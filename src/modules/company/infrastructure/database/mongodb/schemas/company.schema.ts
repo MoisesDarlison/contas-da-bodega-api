@@ -21,7 +21,7 @@ export class Company {
   phone?: string;
 
   @Prop({ type: Date, default: null })
-  deletedAt: Date | null;
+  deletedAt?: Date | null;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

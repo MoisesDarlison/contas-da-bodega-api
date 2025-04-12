@@ -27,7 +27,6 @@ export class UserRepositoryImpl implements IUserRepository {
       email: user.getEmail(),
       password: user['password'],
       phone: user['phone'],
-      isActive: user['isActive'],
       createdAt: user['createdAt'],
       updatedAt: user['updatedAt'],
     });

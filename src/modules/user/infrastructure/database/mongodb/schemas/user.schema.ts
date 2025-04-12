@@ -22,9 +22,6 @@ export class User {
   @Prop({ required: true, unique: true, index: true })
   email: string;
 
-  @Prop({ default: true })
-  isActive: boolean;
-
   @Prop()
   phone?: string;
 

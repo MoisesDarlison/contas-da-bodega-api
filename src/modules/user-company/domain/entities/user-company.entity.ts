@@ -1,10 +1,16 @@
 import { PermissionTypesEnum } from 'src/shared/enums/permission-types.enum';
+interface IEditorInfo {
+  userid: string;
+  updatedAt: Date;
+}
 
 export class UserCompany {
   private constructor(
     private readonly userId: string,
     private readonly companyId: string,
     private permissionType: PermissionTypesEnum,
+    private isActive: boolean,
+    private editorInfo: IEditorInfo,
     private readonly createdAt: Date,
     private updatedAt: Date,
     private deletedAt?: Date | null,
@@ -13,6 +19,7 @@ export class UserCompany {
   static create(input: {
     userId: string;
     companyId: string;
+    editorId: string;
     permissionType: PermissionTypesEnum;
   }): UserCompany {
     const now = new Date();
@@ -20,6 +27,8 @@ export class UserCompany {
       input.userId,
       input.companyId,
       input.permissionType,
+      true,
+      { userid: input.editorId, updatedAt: now },
       now,
       now,
     );
@@ -29,6 +38,8 @@ export class UserCompany {
     userId: string;
     companyId: string;
     permissionType: PermissionTypesEnum;
+    isActive: boolean;
+    editorInfo: IEditorInfo;
     createdAt: Date;
     updatedAt: Date;
     deletedAt?: Date | null;
@@ -37,6 +48,8 @@ export class UserCompany {
       props.userId,
       props.companyId,
       props.permissionType,
+      props.isActive,
+      props.editorInfo,
       props.createdAt,
       props.updatedAt,
       props.deletedAt,

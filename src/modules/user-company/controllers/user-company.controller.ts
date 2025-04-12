@@ -26,13 +26,11 @@ export class UserCompanyController {
 
   @Get('user/:id')
   async getCompanies(@Param('id') userId: string) {
-    const result = await this.getCompaniesByUser.execute(userId);
-    return result;
+    return await this.getCompaniesByUser.execute(userId);
   }
 
   @Get('company/:id')
   async getUsers(@Param('id') companyId: string) {
-    const result = await this.getUsersByCompany.execute(companyId);
-    return result;
+    return await this.getUsersByCompany.execute(companyId);
   }
 }

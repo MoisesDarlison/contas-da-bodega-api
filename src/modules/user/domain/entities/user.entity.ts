@@ -10,7 +10,6 @@ export class User {
     private name: string,
     private email: Email,
     private password: string,
-    private isActive: boolean,
     private createdAt: Date,
     private updatedAt: Date,
     private phone?: string,
@@ -36,7 +35,6 @@ export class User {
       input.name,
       new Email(input.email),
       bcrypt.hashSync(input.password, SALT),
-      false,
       now,
       now,
       input.phone,
@@ -49,7 +47,6 @@ export class User {
     props: {
       name: string;
       email: string;
-      isActive: boolean;
       createdAt: Date;
       updatedAt: Date;
       phone?: string;
@@ -61,7 +58,6 @@ export class User {
       props.name,
       new Email(props.email),
       '',
-      props.isActive,
       props.createdAt,
       props.updatedAt,
       props.phone,
