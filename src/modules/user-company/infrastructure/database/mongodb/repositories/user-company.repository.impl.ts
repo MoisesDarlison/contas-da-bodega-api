@@ -50,7 +50,9 @@ export class UserCompanyRepositoryImpl implements IUserCompanyRepository {
     const prefix = `${UserCompanyRepositoryImpl.name}.${this.findLinkByUserIdAndCompanyId.name}`;
     this.logger.log('User and Company DB', prefix);
 
-    const doc = await this.model.findOne({ userId, companyId }).lean();
+    const doc = await this.model
+      .findOne({ userId, companyId, deletedAt: null })
+      .lean();
     if (!doc) return null;
     return this.toEntity(doc);
   }

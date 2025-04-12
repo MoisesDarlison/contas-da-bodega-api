@@ -7,6 +7,7 @@ export class UserCompany {
     private permissionType: PermissionTypesEnum,
     private readonly createdAt: Date,
     private updatedAt: Date,
+    private deletedAt?: Date | null,
   ) {}
 
   static create(input: {
@@ -30,6 +31,7 @@ export class UserCompany {
     permissionType: PermissionTypesEnum;
     createdAt: Date;
     updatedAt: Date;
+    deletedAt?: Date | null;
   }): UserCompany {
     return new UserCompany(
       props.userId,
@@ -37,6 +39,7 @@ export class UserCompany {
       props.permissionType,
       props.createdAt,
       props.updatedAt,
+      props.deletedAt,
     );
   }
 

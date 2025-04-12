@@ -7,4 +7,5 @@ export interface UserCompanyDocument extends Document {
   permissionType: PermissionTypesEnum;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date | null;
 }

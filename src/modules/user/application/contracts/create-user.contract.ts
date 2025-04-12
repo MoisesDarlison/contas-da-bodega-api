@@ -1,7 +1,7 @@
 export interface ICreateUserUseCaseInput {
   name: string;
   email: string;
-  company: string;
+  password: string;
   phone?: string;
 }
 

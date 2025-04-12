@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import { randomUUID } from 'node:crypto';
 import { ERROR_MESSAGES } from 'src/shared/errors/error-messages';
 import { EntityError } from 'src/shared/errors/exceptions';
@@ -7,6 +8,7 @@ export class User {
     private id: string,
     private name: string,
     private email: string,
+    private password: string,
     private isActive: boolean,
     private createdAt: Date,
     private updatedAt: Date,
@@ -17,11 +19,12 @@ export class User {
   static create(input: {
     name: string;
     email: string;
-    company: string;
+    password: string;
     phone?: string;
   }): User {
     const now = new Date();
     const id = randomUUID();
+    const SALT = Number(process.env.SALT_PWD) || 10;
 
     if (!input.name || !input.email) {
       throw new EntityError(ERROR_MESSAGES.NAME_EMAIL_ARE_REQUIRED);
@@ -31,7 +34,8 @@ export class User {
       id,
       input.name,
       input.email,
-      true,
+      bcrypt.hashSync(input.password, SALT),
+      false,
       now,
       now,
       input.phone,
@@ -55,6 +59,7 @@ export class User {
       id,
       props.name,
       props.email,
+      '',
       props.isActive,
       props.createdAt,
       props.updatedAt,

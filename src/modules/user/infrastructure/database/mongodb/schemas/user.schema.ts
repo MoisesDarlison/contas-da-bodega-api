@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Exclude } from 'class-transformer';
 import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
@@ -14,6 +15,10 @@ export class User {
   @Prop({ required: true })
   name: string;
 
+  @Exclude()
+  @Prop({ required: true })
+  password: string;
+
   @Prop({ required: true, unique: true, index: true })
   email: string;
 
@@ -22,6 +27,9 @@ export class User {
 
   @Prop()
   phone?: string;
+
+  @Prop({ type: Date, default: null })
+  deletedAt?: Date | null;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

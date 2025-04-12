@@ -9,14 +9,17 @@ export type UserCompanyDocument = HydratedDocument<UserCompany>;
   timestamps: true,
 })
 export class UserCompany {
-  @Prop({ type: String, required: true, ref: 'User' })
+  @Prop({ type: String, required: true, ref: 'User', index: true })
   userId: string;
 
-  @Prop({ type: String, required: true, ref: 'Company' })
+  @Prop({ type: String, required: true, ref: 'Company', index: true })
   companyId: string;
 
   @Prop({ type: String, enum: PermissionTypesEnum, required: true })
   permissionType: PermissionTypesEnum;
+
+  @Prop({ type: Date, default: null })
+  deletedAt?: Date | null;
 }
 
 export const UserCompanySchema = SchemaFactory.createForClass(UserCompany);

@@ -26,8 +26,6 @@ export class CompanyRepositoryImpl implements ICompanyRepository {
       id: company.getId(),
       name: company['name'],
       email: company['email'],
-      sharingIdentifier: company.getSharingIdentifier(),
-      isActive: company.isCompanyActive(),
       phone: company['phone'],
     });
     return this.toEntity(doc);
@@ -38,7 +36,7 @@ export class CompanyRepositoryImpl implements ICompanyRepository {
     this.logger.log('Companies DB', prefix);
 
     const doc = await this.companyModel.findById(id);
-    if (!doc) return null;
+    if (!doc || doc.deletedAt) return null;
     return this.toEntity(doc);
   }
 
@@ -51,7 +49,11 @@ export class CompanyRepositoryImpl implements ICompanyRepository {
 
     const skip = (page - 1) * limit;
     const [docs, total] = await Promise.all([
-      this.companyModel.find().skip(skip).limit(limit).lean(),
+      this.companyModel
+        .find({ deletedAt: null })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
       this.companyModel.countDocuments(),
     ]);
     return {

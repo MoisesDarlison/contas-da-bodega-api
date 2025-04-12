@@ -25,6 +25,7 @@ export class UserRepositoryImpl implements IUserRepository {
       id: user.getId(),
       name: user['name'],
       email: user['email'],
+      password: user['password'],
       phone: user['phone'],
       isActive: user['isActive'],
       createdAt: user['createdAt'],
@@ -39,7 +40,7 @@ export class UserRepositoryImpl implements IUserRepository {
     this.logger.log('User DB', prefix);
 
     const doc = await this.userModel.findById(id);
-    if (!doc) return null;
+    if (!doc || doc.deletedAt) return null;
     return this.toEntity(doc);
   }
 
@@ -52,7 +53,7 @@ export class UserRepositoryImpl implements IUserRepository {
 
     const skip = (page - 1) * limit;
     const [docs, total] = await Promise.all([
-      this.userModel.find().skip(skip).limit(limit).lean(),
+      this.userModel.find({ deletedAt: null }).skip(skip).limit(limit).lean(),
       this.userModel.countDocuments(),
     ]);
     return {

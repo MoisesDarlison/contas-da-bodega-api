@@ -1,4 +1,12 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsStrongPassword,
+  Validate,
+} from 'class-validator';
+import { MatchPasswordsConstraint } from 'src/shared/decorators/MatchPasswordDto.decorator';
 
 export class CreateRequestUserDto {
   @IsNotEmpty()
@@ -8,11 +16,25 @@ export class CreateRequestUserDto {
   @IsEmail()
   email: string;
 
+  @IsNotEmpty()
+  @IsStrongPassword({
+    minLength: 6,
+    minLowercase: 0,
+    minNumbers: 0,
+    minSymbols: 0,
+    minUppercase: 0,
+  })
+  password: string;
+
+  @IsNotEmpty()
+  @Validate(MatchPasswordsConstraint)
+  passwordConfirm: string;
+
   @IsOptional()
   @IsString()
   phone?: string;
 
-  @IsNotEmpty()
-  @IsString()
-  company: string;
+  isPasswordConfirmed(): boolean {
+    return this.password === this.passwordConfirm;
+  }
 }

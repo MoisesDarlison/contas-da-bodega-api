@@ -17,12 +17,6 @@ export class Company {
   @Prop({ required: true, unique: true, index: true })
   email: string;
 
-  @Prop({ required: true, unique: true })
-  sharingIdentifier: string;
-
-  @Prop({ default: true })
-  isActive: boolean;
-
   @Prop()
   phone?: string;
 
