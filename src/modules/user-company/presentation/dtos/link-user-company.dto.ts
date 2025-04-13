@@ -1,4 +1,4 @@
-import { IsEnum, IsUUID } from 'class-validator';
+import { IsEnum, IsOptional, IsUUID } from 'class-validator';
 import { PermissionTypesEnum } from 'src/shared/domain/enums/permission-types.enum';
 
 export class LinkUserToCompanyDto {
@@ -8,8 +8,9 @@ export class LinkUserToCompanyDto {
   @IsUUID()
   companyId: string;
 
+  @IsOptional()
   @IsEnum(PermissionTypesEnum)
-  permissionType: PermissionTypesEnum;
+  permissionType?: PermissionTypesEnum;
 }
 
 export class LinkUserToCompanyResponseDto {

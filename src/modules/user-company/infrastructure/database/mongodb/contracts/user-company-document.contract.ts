@@ -8,7 +8,7 @@ interface IEditorInfo {
 export interface UserCompanyDocument extends Document {
   userId: string;
   companyId: string;
-  permissionType: PermissionTypesEnum;
+  permissionType?: PermissionTypesEnum;
   isActive: boolean;
   editorInfo: IEditorInfo;
   createdAt: Date;

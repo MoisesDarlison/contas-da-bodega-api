@@ -20,8 +20,12 @@ export class UserCompany {
   @Prop({ type: String, required: true, ref: 'Company', index: true })
   companyId: string;
 
-  @Prop({ type: String, enum: PermissionTypesEnum, required: true })
-  permissionType: PermissionTypesEnum;
+  @Prop({
+    type: String,
+    enum: PermissionTypesEnum,
+    default: PermissionTypesEnum.EMPLOYEE,
+  })
+  permissionType?: PermissionTypesEnum;
 
   @Prop({ type: Boolean, default: true })
   isActive: boolean;

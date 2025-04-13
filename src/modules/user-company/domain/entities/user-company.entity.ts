@@ -8,11 +8,11 @@ export class UserCompany {
   private constructor(
     private readonly userId: string,
     private readonly companyId: string,
-    private permissionType: PermissionTypesEnum,
     private isActive: boolean,
     private editorInfo: IEditorInfo,
     private readonly createdAt: Date,
     private updatedAt: Date,
+    private permissionType?: PermissionTypesEnum,
     private deletedAt?: Date | null,
   ) {}
 
@@ -20,38 +20,38 @@ export class UserCompany {
     userId: string;
     companyId: string;
     editorId: string;
-    permissionType: PermissionTypesEnum;
+    permissionType?: PermissionTypesEnum;
   }): UserCompany {
     const now = new Date();
     return new UserCompany(
       input.userId,
       input.companyId,
-      input.permissionType,
       true,
       { userid: input.editorId, updatedAt: now },
       now,
       now,
+      input.permissionType || PermissionTypesEnum.EMPLOYEE,
     );
   }
 
   static clone(props: {
     userId: string;
     companyId: string;
-    permissionType: PermissionTypesEnum;
     isActive: boolean;
     editorInfo: IEditorInfo;
     createdAt: Date;
     updatedAt: Date;
+    permissionType?: PermissionTypesEnum;
     deletedAt?: Date | null;
   }): UserCompany {
     return new UserCompany(
       props.userId,
       props.companyId,
-      props.permissionType,
       props.isActive,
       props.editorInfo,
       props.createdAt,
       props.updatedAt,
+      props.permissionType,
       props.deletedAt,
     );
   }
@@ -64,15 +64,15 @@ export class UserCompany {
     return this.companyId;
   }
 
-  public toObject() {
+  toObject() {
     return {
       userId: this.userId,
       companyId: this.companyId,
-      permissionType: this.permissionType,
       isActive: this.isActive,
       editorInfo: this.editorInfo,
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString(),
+      permissionType: this.permissionType,
     };
   }
 
