@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
+import { AuthModule } from '../auth/auth.module';
 import { CompanyModule } from '../company/company.module';
 import { UserModule } from '../user/user.module';
 import { GetCompaniesByUserIdUseCase } from './application/use-cases/get-companies-by-user-id.usecase';
@@ -22,6 +23,7 @@ import { UserCompanyController } from './presentation/controllers/user-company.c
     ]),
     UserModule,
     CompanyModule,
+    AuthModule,
   ],
   controllers: [UserCompanyController],
   providers: [

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { AuthModule } from '../auth/auth.module';
 import { CreateCompanyUseCase } from './application/use-cases/create-company.usecase';
 import { FindAllCompanyUseCase } from './application/use-cases/find-all-company.usecase';
 import { ACompanyRepository } from './domain/contracts/company-repository.abstract';
@@ -14,6 +15,7 @@ import { CompanyController } from './presentation/controllers/company.controller
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
+    AuthModule,
   ],
   controllers: [CompanyController],
   providers: [
