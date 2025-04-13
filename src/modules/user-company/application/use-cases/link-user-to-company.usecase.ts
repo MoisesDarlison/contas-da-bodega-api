@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AUserCompanyRepository } from '../../domain/contracts/user-company-repository.abstract';
 
 import { ACompanyRepository } from 'src/modules/company/domain/contracts/company-repository.abstract';
 import { AUserRepository } from 'src/modules/user/domain/contracts/user-repository.abstract';
-import { ConflictError } from 'src/shared/domain/errors';
+import { ConflictError, NotFoundError } from 'src/shared/domain/errors';
 import { ERROR_MESSAGES } from 'src/shared/domain/errors/error-messages';
 import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
 import { UserCompany } from '../../domain/entities/user-company.entity';
@@ -24,12 +24,15 @@ export class LinkUserToCompanyUseCase {
 
     const user = await this.userRepo.findById(input.userId);
     if (!user) {
-      throw new NotFoundException(ERROR_MESSAGES.USER_NOT_FOUND);
+      throw new NotFoundError(ERROR_MESSAGES.USER_NOT_FOUND, input.userId);
     }
 
     const company = await this.companyRepo.findById(input.companyId);
     if (!company) {
-      throw new NotFoundException(ERROR_MESSAGES.COMPANY_NOT_FOUND);
+      throw new NotFoundError(
+        ERROR_MESSAGES.COMPANY_NOT_FOUND,
+        input.companyId,
+      );
     }
 
     const alreadyLinked =
