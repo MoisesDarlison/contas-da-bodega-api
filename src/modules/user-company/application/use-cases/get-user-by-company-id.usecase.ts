@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { LoggerService } from 'src/shared/infrastructure/logging/services/logger.service';
 import { AUserCompanyRepository } from '../../domain/contracts/user-company-repository.abstract';
-import { UserCompany } from '../../domain/entities/user-company.entity';
+import { IGetCompaniesByUserIdUseCaseOutput } from '../contracts/get-companies-by-user-id.contract';
+import { userCompanyDomainToApplication } from '../mapper/get-companies-by-user-id.mapper';
 
 @Injectable()
 export class GetUserByCompanyIdUseCase {
@@ -10,9 +11,13 @@ export class GetUserByCompanyIdUseCase {
     private readonly userCompanyRepo: AUserCompanyRepository,
   ) {}
 
-  async execute(companyId: string): Promise<UserCompany[]> {
+  async execute(
+    companyId: string,
+  ): Promise<IGetCompaniesByUserIdUseCaseOutput[]> {
     const prefix = `${GetUserByCompanyIdUseCase.name}.${this.execute.name}`;
     this.logger.log('Get Users By CompanyId UseCase', prefix, companyId);
-    return this.userCompanyRepo.findUsersByCompanyId(companyId);
+    const usersCompanies =
+      await this.userCompanyRepo.findUsersByCompanyId(companyId);
+    return usersCompanies.map(userCompanyDomainToApplication);
   }
 }

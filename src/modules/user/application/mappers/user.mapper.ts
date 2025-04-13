@@ -1,6 +1,7 @@
 import { User } from '../../domain/entities/user.entity';
+import { ICreateUserUseCaseOutput } from '../contracts/create-user.contract';
 
-export function userDomainToApplication(user: User) {
+export function userDomainToApplication(user: User): ICreateUserUseCaseOutput {
   const output = user.toObject();
   return {
     id: output.id,

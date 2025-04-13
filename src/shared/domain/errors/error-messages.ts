@@ -4,4 +4,5 @@ export const ERROR_MESSAGES = {
   USER_NOT_FOUND: 'User not found',
   LINK_ALREADY_EXISTS: 'User is already linked to this company',
   NAME_ARE_REQUIRED: 'Name is required',
+  INVALID_TOKEN: 'Token Invalid',
 };

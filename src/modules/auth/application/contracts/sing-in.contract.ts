@@ -5,5 +5,14 @@ export interface ISignInUseCaseInput {
 
 export interface ISignInUseCaseOutput {
   accessToken: string;
-  expiresAt: string;
+  refreshToken: string;
+  userId: string;
+  email: string;
+  name: string;
+}
+
+export interface IJwtPayload {
+  sub: string;
+  email: string;
+  name: string;
 }

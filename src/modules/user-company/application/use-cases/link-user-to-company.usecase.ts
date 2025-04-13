@@ -44,11 +44,10 @@ export class LinkUserToCompanyUseCase {
       throw new ConflictError(ERROR_MESSAGES.LINK_ALREADY_EXISTS);
     }
 
-    //FIXME: Devera pegar o ID direto pela autenticação
     const link = UserCompany.create({
       userId: input.userId,
       companyId: input.companyId,
-      editorId: input.userId,
+      editorId: input.authenticatedUserId,
       permissionType: input.permissionType,
     });
 

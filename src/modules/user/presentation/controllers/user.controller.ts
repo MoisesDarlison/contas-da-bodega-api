@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 
-import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guards/jwt-auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guards/jwt-auth.guard';
 import { CreateUserUseCase } from '../../application/use-cases/create-user.usecase';
 import { FindAllUsersUseCase } from '../../application/use-cases/find-all-user.usecase';
 import { CreateRequestUserDto } from '../dtos/create-user.dto';
