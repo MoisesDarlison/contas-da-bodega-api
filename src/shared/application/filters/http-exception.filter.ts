@@ -1,17 +1,13 @@
 import {
-    ArgumentsHost,
-    BadRequestException,
-    Catch,
-    ExceptionFilter,
-    HttpStatus,
-    NotFoundException,
+  ArgumentsHost,
+  BadRequestException,
+  Catch,
+  ExceptionFilter,
+  HttpStatus,
+  NotFoundException,
 } from '@nestjs/common';
 import { Response } from 'express';
-import {
-    ConflictError,
-    EntityError,
-    NotFoundError,
-} from '../../domain/errors';
+import { ConflictError, EntityError, NotFoundError } from '../../domain/errors';
 import { LoggerService } from '../../infrastructure/logging/services/logger.service';
 import { extractValidationMessage } from '../utils/http/validation-error-message.util';
 
@@ -47,7 +43,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     }
 
     this.logger.error(
-      `Status: ${status} | Message: ${message}`,
+      `Request handled With Error | Status: ${status} | Message: ${message}`,
       exception instanceof Error ? exception.stack : undefined,
       'AllExceptionsFilter',
     );
