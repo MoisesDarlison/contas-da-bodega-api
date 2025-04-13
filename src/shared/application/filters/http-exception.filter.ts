@@ -7,6 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { UnauthorizedError } from 'src/shared/domain/errors/exceptions/unauthorized.error';
 import { ConflictError, EntityError, NotFoundError } from '../../domain/errors';
 import { LoggerService } from '../../infrastructure/logging/services/logger.service';
 import { extractValidationMessage } from '../utils/http/validation-error-message.util';
@@ -33,6 +34,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
       message = exception.message;
     } else if (exception instanceof EntityError) {
       status = HttpStatus.UNPROCESSABLE_ENTITY;
+      message = exception.message;
+    } else if (exception instanceof UnauthorizedError) {
+      status = HttpStatus.UNAUTHORIZED;
       message = exception.message;
     } else if (exception instanceof BadRequestException) {
       status = HttpStatus.BAD_REQUEST;

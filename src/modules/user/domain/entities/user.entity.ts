@@ -24,7 +24,7 @@ export class User {
   }): User {
     const now = new Date();
     const id = randomUUID();
-    const SALT = Number(process.env.SALT_PWD) || 10;
+    const SALT = Number(process.env.SALT_PWD) || 6;
 
     if (!input.name) {
       throw new EntityError(ERROR_MESSAGES.NAME_ARE_REQUIRED);
@@ -47,6 +47,7 @@ export class User {
     props: {
       name: string;
       email: string;
+      password: string;
       createdAt: Date;
       updatedAt: Date;
       phone?: string;
@@ -57,7 +58,7 @@ export class User {
       id,
       props.name,
       new Email(props.email),
-      '',
+      props.password,
       props.createdAt,
       props.updatedAt,
       props.phone,
@@ -74,6 +75,7 @@ export class User {
       id: this.id,
       name: this.name,
       email: this.email.getEmail(),
+      password: this.password,
       createdAt: this.createdAt.toISOString(),
       updatedAt: this.updatedAt.toISOString(),
       phone: this.phone || null,

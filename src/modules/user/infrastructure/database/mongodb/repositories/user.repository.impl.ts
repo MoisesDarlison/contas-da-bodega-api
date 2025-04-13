@@ -38,6 +38,15 @@ export class UserRepositoryImpl implements AUserRepository {
     return this.toEntity(doc);
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    const prefix = `${UserRepositoryImpl.name}.${this.findByEmail.name}`;
+    this.logger.log('User DB', prefix);
+
+    const doc = await this.userModel.findOne({ email });
+    if (!doc || doc.deletedAt) return null;
+    return this.toEntity(doc);
+  }
+
   async findAll(page: number, limit: number): Promise<User[]> {
     const prefix = `${UserRepositoryImpl.name}.${this.findAll.name}`;
     this.logger.log('User DB', prefix);
